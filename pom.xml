@@ -5,7 +5,7 @@
 	<artifactId>spring-data-jpa</artifactId>
 	<version>1.0</version>
 	<name>spring-data-jpa</name>
-	<inceptionYear>2013</inceptionYear>
+	<inceptionYear>2014</inceptionYear>
 
 	<description>Spring/Spring data JPA + JPA 2 + Hibernate 4 + c3p0 + EHCache + log4j Integration Demo</description>
 
@@ -30,7 +30,7 @@
 	</developers>
 
 	<scm>
-		<url>https://github.com/danielme-com/Spring-3---JPA-2---Hibernate-4---c3p0---EHCache---log4j-Integration-Demo.git</url>
+		<url>https://github.com/danielme-com/Spring-Data-JPA-Demo.git</url>
 	</scm>
 
 	<licenses>
