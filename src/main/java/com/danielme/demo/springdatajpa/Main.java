@@ -1,5 +1,6 @@
 package com.danielme.demo.springdatajpa;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -59,6 +60,8 @@ public class Main
   		
   		//query by name query
   		logger.info(countryRepository.findByPopulation(115296767).getName());
+  		
+  		System.out.println("updated: " + countryRepository.updateCreation(Calendar.getInstance()));
   		
   		//debug and test EHCache for the second call ;)
   		countryRepository.getAllUsingCache(null);
