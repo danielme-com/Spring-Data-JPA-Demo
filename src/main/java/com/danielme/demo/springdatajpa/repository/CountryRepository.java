@@ -3,10 +3,14 @@ package com.danielme.demo.springdatajpa.repository;
 import java.util.Calendar;
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
+import javax.persistence.QueryHint;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.danielme.demo.springdatajpa.model.Country;
@@ -16,10 +20,20 @@ public interface CountryRepository extends BaseRepository<Country, Long>, Countr
 {
 	Country findByName(String name);
 	
-	@Query("from Country c where lower(c.name) like lower(?1)")
-	List<Country> findByNameWithQuery(String name, Sort sort);
+	@QueryHints(value = { @QueryHint (name = "org.hibernate.cacheable", value = "true")})
+	List<Country> findByPopulationGreaterThan(Integer population);
 	
-	Country findByPopulation(Integer population);
+	int countByPopulationGreaterThan(Integer population);
+	
+	@Query("from Country c where lower(c.name) like lower(?1)")
+	Page<Country> getByNameWithQuery(String name, Pageable page);
+	
+	Country getByPopulationNamedQuery(Integer population);	
+	
+	List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);			
+	
+	@Query("select case when (count(c) > 0)  then true else false end from Country c where c.name = ?1)")
+	boolean exists(String name);		
 	
 	@Transactional
 	@Modifying
