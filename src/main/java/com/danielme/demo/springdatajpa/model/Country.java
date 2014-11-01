@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Table(name = "countries")
-@NamedQuery(name = "Country.findByPopulation", query = "FROM Country WHERE population = ?1")
+@NamedQuery(name = "Country.getByPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
 public class Country
 {
 	 @Id
