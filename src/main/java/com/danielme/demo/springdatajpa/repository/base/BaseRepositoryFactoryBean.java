@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.core.RepositoryMetadata;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
@@ -27,7 +28,7 @@ public class BaseRepositoryFactoryBean<T extends JpaRepository<S, ID>, S, ID ext
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
-		protected <T, ID extends Serializable> JpaRepository<?, ?> getTargetRepository(RepositoryMetadata metadata, EntityManager entityManager)
+		protected <T, ID extends Serializable> SimpleJpaRepository<?, ?> getTargetRepository(RepositoryMetadata metadata, EntityManager entityManager)
 		{
 			return new BaseRepositoryImpl(metadata.getDomainType(), entityManager);
 		}
