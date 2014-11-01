@@ -2,30 +2,35 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0    	http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.danielme.demo</groupId>
-	<artifactId>spring-data-jpa</artifactId>
+	<artifactId>spring-data-jpa-demo</artifactId>
 	<version>1.0</version>
-	<name>spring-data-jpa</name>
+	<name>spring-data-jpa-demo</name>
 	<inceptionYear>2014</inceptionYear>
 
 	<description>Spring/Spring data JPA + JPA 2 + Hibernate 4 + c3p0 + EHCache + log4j Integration Demo</description>
 
+	<prerequisites>
+       <maven>3.0</maven>
+     </prerequisites>	
+     
 	<properties>
 	
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.mainClass>com.danielme.demo.springdatajpa.Main</project.build.mainClass>
 		<java.version>1.6</java.version>
 		
-		<jar.plugin.version>2.4</jar.plugin.version>
+		<jar.plugin.version>2.5</jar.plugin.version>
 		<compiler.plugin.version>3.1</compiler.plugin.version>
 		<exec.plugin.version>1.2.1</exec.plugin.version>
 		<shade.plugin.version>2.2</shade.plugin.version>
 		
-		<spring.version>3.2.8.RELEASE</spring.version>
-		<hibernate.version>4.3.1.Final</hibernate.version>
+		<spring.version>3.2.11.RELEASE</spring.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
 		<c3p0.version>0.9.1.2</c3p0.version>
-		<slf4jlog4j.version>1.7.6</slf4jlog4j.version>
-		<mysql.version>5.1.29</mysql.version>		
-		<spring.data.jpa.version>1.5.0.RELEASE</spring.data.jpa.version>
+		<slf4jlog4j.version>1.7.7</slf4jlog4j.version>
+		<mysql.version>5.1.33</mysql.version>		
+		<spring.data.jpa.version>1.6.4.RELEASE</spring.data.jpa.version>
+		<junit.version>4.11</junit.version>
 		
 	</properties>
 
@@ -239,6 +244,21 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.version}</version>
+		</dependency>
+		
+		<!-- testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 	</dependencies>
