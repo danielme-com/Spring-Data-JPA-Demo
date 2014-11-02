@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "countries")
 @NamedQuery(name = "Country.getByPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
-public class Country
+public class Country extends AuditableEntity
 {
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)

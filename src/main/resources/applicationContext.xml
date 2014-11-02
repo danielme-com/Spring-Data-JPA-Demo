@@ -10,6 +10,8 @@
 
 	<jpa:repositories base-package="com.danielme.demo.springdatajpa.repository" factory-class="com.danielme.demo.springdatajpa.repository.base.BaseRepositoryFactoryBean"/>
 
+	<jpa:auditing auditor-aware-ref="customAuditorAware" />	
+	
 	<!-- Autowired -->
 	<!--  used to activate annotations in beans already registered in the application context (no matter if they were defined with XML or by package scanning) -->
 	<context:annotation-config />	

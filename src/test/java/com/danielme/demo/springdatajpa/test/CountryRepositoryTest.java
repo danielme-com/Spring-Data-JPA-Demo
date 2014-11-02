@@ -18,10 +18,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.danielme.demo.springdatajpa.AuthenticationMockup;
 import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/resources/applicationContext.xml")
@@ -39,6 +39,8 @@ public class CountryRepositoryTest
 	{
 		if (!springInit)
 		{
+			AuthenticationMockup.UserName = "dani";
+
 			// empty repository
 			countryRepository.deleteAllInBatch();
 
@@ -52,6 +54,31 @@ public class CountryRepositoryTest
 			countryRepository.save(new Country("Norway", 5136700));
 			springInit = true;
 		}
+	}
+
+	@Test
+	public void testAudit() throws Exception
+	{
+		Country country = new Country();
+		country.setName("Bolivia");
+		country.setPopulation(10556105);
+
+		country = countryRepository.save(country);
+		assertTrue(country.getCreateBy().equals(country.getLastModifiedBy()));
+		assertTrue(country.getCreatedDate().equals(country.getLastModifiedDate()));
+
+		Thread.sleep(2000);
+
+		AuthenticationMockup.UserName = "update";
+		country.setName("Estado Plurinacional de Bolivia");
+		country = countryRepository.save(country);
+		assertTrue(country.getLastModifiedBy().equals(AuthenticationMockup.UserName));
+		assertTrue(country.getCreateBy().equals("dani"));
+		assertFalse(country.getCreatedDate().equals(country.getLastModifiedDate()));
+
+		AuthenticationMockup.UserName = "dani";
+		countryRepository.delete(country);
+
 	}
 
 	@Test
