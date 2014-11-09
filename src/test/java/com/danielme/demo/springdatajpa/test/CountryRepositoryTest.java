@@ -23,7 +23,7 @@ import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration("file:src/main/resources/applicationContext.xml")
 public class CountryRepositoryTest
 {
@@ -31,29 +31,24 @@ public class CountryRepositoryTest
 	@Autowired
 	private CountryRepository countryRepository;
 
-	private static boolean springInit = false;
-
 	@Before
 	@Transactional
 	public void setUp() throws Exception
 	{
-		if (!springInit)
-		{
-			AuthenticationMockup.UserName = "dani";
+		AuthenticationMockup.UserName = "dani";
 
-			// empty repository
-			countryRepository.deleteAllInBatch();
+		// empty repository
+		countryRepository.deleteAllInBatch();
 
-			// insert
-			countryRepository.save(new Country("Spain", 47265321));
-			countryRepository.save(new Country("Mexico", 115296767));
-			countryRepository.save(new Country("Germany", 81799600));
-			countryRepository.save(new Country("Finland", 5470820));
-			countryRepository.save(new Country("Colombia", 47846160));
-			countryRepository.save(new Country("Costa Rica", 4586353));
-			countryRepository.save(new Country("Norway", 5136700));
-			springInit = true;
-		}
+		// insert
+		countryRepository.save(new Country("Spain", 47265321));
+		countryRepository.save(new Country("Mexico", 115296767));
+		countryRepository.save(new Country("Germany", 81799600));
+		countryRepository.save(new Country("Finland", 5470820));
+		countryRepository.save(new Country("Colombia", 47846160));
+		countryRepository.save(new Country("Costa Rica", 4586353));
+		countryRepository.save(new Country("Norway", 5136700));
+
 	}
 
 	@Test
