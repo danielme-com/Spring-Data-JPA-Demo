@@ -39,5 +39,8 @@ public interface CountryRepository extends BaseRepository<Country, Long>, Countr
 	@Modifying
     @Query("UPDATE Country set creation = (?1)")
 	int updateCreation(Calendar creation);
+	
+	@Transactional
+	int deleteByName(String name);
 		
 }

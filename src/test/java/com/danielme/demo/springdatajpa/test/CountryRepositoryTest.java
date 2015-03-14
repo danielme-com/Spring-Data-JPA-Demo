@@ -113,6 +113,8 @@ public class CountryRepositoryTest
 		Thread.sleep(2000);
 		assertTrue(countryRepository.updateCreation(Calendar.getInstance()) == 7);
 		assertTrue(countryRepository.findByName("Norway").getCreation().after(creation));
+		assertTrue(countryRepository.deleteByName("%") == 0);
+		assertTrue(countryRepository.deleteByName("Norway") == 1);
 	}
 
 	@Test
