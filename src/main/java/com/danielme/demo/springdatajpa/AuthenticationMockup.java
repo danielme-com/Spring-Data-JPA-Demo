@@ -1,7 +1,6 @@
 package com.danielme.demo.springdatajpa;
 
-public class AuthenticationMockup
-{
+public class AuthenticationMockup {
 
-	public static String UserName;
+    public static String UserName;
 }

@@ -9,18 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.danielme.demo.springdatajpa.model.Country;
 
+public class CountryRepositoryImpl implements CountryRepositoryCustom {
+    @PersistenceContext
+    private EntityManager entityManager;
 
-public class CountryRepositoryImpl implements CountryRepositoryCustom
-{
-	@PersistenceContext
-	private EntityManager entityManager;	
-	
-	@Override
-	@Transactional
-	public void clearEntityCache() 
-	{
-		SessionFactory sessionFactory = entityManager.unwrap(Session.class).getSessionFactory();
-		sessionFactory.getCache().evictEntityRegion(Country.class);
-	}	
+    @Override
+    @Transactional
+    public void clearEntityCache() {
+        SessionFactory sessionFactory = entityManager.unwrap(Session.class).getSessionFactory();
+        sessionFactory.getCache().evictEntityRegion(Country.class);
+    }
 
 }

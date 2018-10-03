@@ -6,13 +6,11 @@ import org.springframework.stereotype.Component;
 import com.danielme.demo.springdatajpa.AuthenticationMockup;
 
 @Component
-public class CustomAuditorAware implements AuditorAware<String>
-{
+public class CustomAuditorAware implements AuditorAware<String> {
 
-	@Override
-	public String getCurrentAuditor()
-	{
-		return AuthenticationMockup.UserName;
-	}
+    @Override
+    public String getCurrentAuditor() {
+        return AuthenticationMockup.UserName;
+    }
 
 }

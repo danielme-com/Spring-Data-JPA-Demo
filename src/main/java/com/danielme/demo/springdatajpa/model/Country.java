@@ -17,78 +17,66 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "countries")
 @NamedQuery(name = "Country.getByPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
-public class Country extends AuditableEntity
-{
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.AUTO)
-	 private Long id;
-	 
-	 @Column(nullable = false, unique=true)
-	 private String name;
-	 
-	 @Column(nullable = false)
-	 private Integer population;
-	 
-	 @Column(updatable = false, nullable = false)
-	 @Temporal(TemporalType.TIMESTAMP)
-	 private Calendar creation;
-	 
-	 public Country()
-	 {
-		super();
-	 }
+public class Country extends AuditableEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	public Country(String name, Integer population)
-	{
-		super();
-		this.name = name;
-		this.population = population;
-	}
-	
-	 @PrePersist
-	 public void onPersist()
-	 {
-		 creation = Calendar.getInstance();
-	 }
+    @Column(nullable = false, unique = true)
+    private String name;
 
-	public Long getId()
-	{
-		return id;
-	}
+    @Column(nullable = false)
+    private Integer population;
 
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
+    @Column(updatable = false, nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar creation;
 
-	public String getName()
-	{
-		return name;
-	}
+    public Country() {
+        super();
+    }
 
-	public void setName(String name)
-	{
-		this.name = name;
-	}
+    public Country(String name, Integer population) {
+        super();
+        this.name = name;
+        this.population = population;
+    }
 
-	public Integer getPopulation()
-	{
-		return population;
-	}
+    @PrePersist
+    public void onPersist() {
+        creation = Calendar.getInstance();
+    }
 
-	public void setPopulation(Integer population)
-	{
-		this.population = population;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Calendar getCreation()
-	{
-		return creation;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setCreation(Calendar creation)
-	{
-		this.creation = creation;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getPopulation() {
+        return population;
+    }
+
+    public void setPopulation(Integer population) {
+        this.population = population;
+    }
+
+    public Calendar getCreation() {
+        return creation;
+    }
+
+    public void setCreation(Calendar creation) {
+        this.creation = creation;
+    }
 
 }
