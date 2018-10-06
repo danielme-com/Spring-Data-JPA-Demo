@@ -2,6 +2,7 @@ package com.danielme.demo.springdatajpa.model;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @MappedSuperclass
 public class AuditableEntity {
 
+    @Column(nullable = false, updatable = false)
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar createdDate;
@@ -25,6 +27,7 @@ public class AuditableEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar lastModifiedDate;
 
+    @Column(nullable = false, updatable = false)
     @CreatedBy
     private String createBy;
 
