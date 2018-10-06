@@ -12,13 +12,14 @@ import org.hibernate.jpa.QueryHints;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
-public class BaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
-        implements BaseRepository<T, ID> {
+public class CustomBaseRepositoryImpl<T, ID extends Serializable> extends SimpleJpaRepository<T, ID>
+        implements CustomBaseRepository<T, ID> {
+    
     private EntityManager entityManager;
 
     private Class<T> clazz;
 
-    public BaseRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
+    public CustomBaseRepositoryImpl(Class<T> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
         this.entityManager = entityManager;
         clazz = domainClass;

@@ -1,36 +1,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0    	http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.danielme.demo</groupId>
     <artifactId>spring-data-jpa-demo</artifactId>
-    <version>1.0</version>
+    <version>2.0</version>
     <name>spring-data-jpa-demo</name>
     <inceptionYear>2014</inceptionYear>
 
-    <description>Spring/Spring data JPA + JPA 2 + Hibernate 4 + c3p0 + EHCache + log4j Integration Demo</description>
-
-    <prerequisites>
-        <maven>3.0</maven>
-    </prerequisites>
+    <description>Spring/Spring Data JPA + JPA 2 + Hibernate 5 + c3p0 + EHCache + log4j Integration Demo</description>
 
     <properties>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.6</java.version>
+        <java.version>1.8</java.version>
 
-        <jar.plugin.version>2.5</jar.plugin.version>
-        <compiler.plugin.version>3.1</compiler.plugin.version>
-        <exec.plugin.version>1.2.1</exec.plugin.version>
-        <shade.plugin.version>2.3</shade.plugin.version>
-
-        <spring.version>3.2.11.RELEASE</spring.version>
-        <hibernate.version>4.3.6.Final</hibernate.version>
+        <hibernate.version>5.2.17.Final</hibernate.version>
         <c3p0.version>0.9.1.2</c3p0.version>
         <slf4jlog4j.version>1.7.7</slf4jlog4j.version>
         <mysql.version>5.1.33</mysql.version>
-        <spring.data.jpa.version>1.6.4.RELEASE</spring.data.jpa.version>
-        <junit.version>4.11</junit.version>
+        <spring.data.jpa.version>2.1.0.RELEASE</spring.data.jpa.version>
+        <spring.version>5.1.0.RELEASE</spring.version>
+        <junit.version>4.12</junit.version>
 
     </properties>
 
@@ -57,99 +48,40 @@
         </license>
     </licenses>
 
-    <repositories>
-
-        <repository>
-            <id>JBoss repository</id>
-            <url>http://repository.jboss.org/nexus/content/groups/public/</url>
-        </repository>
-
-        <repository>
-            <id>java.net-Public</id>
-            <url>https://maven.java.net/content/groups/public/</url>
-        </repository>
-
-    </repositories>
-
 
     <build>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${jar.plugin.version}</version>
-                    <configuration>
-                        <archive>
-                            <manifest>
-                                <addClasspath>true</addClasspath>
-                                <mainClass>${project.build.mainClass}</mainClass>
-                            </manifest>
-                        </archive>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${compiler.plugin.version}</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
-                <!-- mvn clean package exec:java -->
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <version>${exec.plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>java</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <mainClass>${project.build.mainClass}</mainClass>
-                    </configuration>
-                </plugin>
-                <!-- package all dependencies in one executable big jar > 
-                    mvn clean package shade:shade -->
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <version>${shade.plugin.version}</version>
+                    <artifactId>maven-enforcer-plugin</artifactId>
                     <executions>
                         <execution>
-                            <phase>package</phase>
+                            <id>enforce-java</id>
                             <goals>
-                                <goal>shade</goal>
+                                <goal>enforce</goal>
                             </goals>
+                            <configuration>
+                                <rules>
+                                    <requireJavaVersion>
+                                        <version>${java.version}</version>
+                                    </requireJavaVersion>
+                                </rules>
+                            </configuration>
                         </execution>
                     </executions>
-                    <configuration>
-                        <finalName>${project.artifactId}-${project.version}-all-deps</finalName>
-                        <transformers>
-                            <transformer
-                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                <mainClass>${project.build.mainClass}</mainClass>
-                            </transformer>
-                        </transformers>
-                        <!-- http://zhentao-li.blogspot.com.es/2012/06/maven-shade-plugin-invalid-signature.html -->
-                        <filters>
-                            <filter>
-                                <artifact>*:*</artifact>
-                                <excludes>
-                                    <exclude>META-INF/*.SF</exclude>
-                                    <exclude>META-INF/*.DSA</exclude>
-                                    <exclude>META-INF/*.RSA</exclude>
-                                </excludes>
-                            </filter>
-                        </filters>
-
-                    </configuration>
                 </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
@@ -157,73 +89,21 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-
-        <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
             <version>${spring.data.jpa.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-orm</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-tx</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-beans</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-aop</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-core</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-context</artifactId>
-                    <groupId>org.springframework</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!--@Transactional -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.2.Final</version>
         </dependency>
 
         <dependency>
@@ -232,9 +112,12 @@
             <version>${hibernate.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
 
-
-        <!-- connection pooling with c3p0 -->
         <dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>

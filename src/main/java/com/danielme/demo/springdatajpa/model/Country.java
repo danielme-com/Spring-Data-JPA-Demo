@@ -16,10 +16,10 @@ import javax.persistence.TemporalType;
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Table(name = "countries")
-@NamedQuery(name = "Country.getByPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
+@NamedQuery(name = "Country.byPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
 public class Country extends AuditableEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)

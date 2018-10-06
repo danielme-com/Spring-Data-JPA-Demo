@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.danielme.demo.springdatajpa.model.Country;
 
 public class CountryRepositoryImpl implements CountryRepositoryCustom {
+
     @PersistenceContext
     private EntityManager entityManager;
 

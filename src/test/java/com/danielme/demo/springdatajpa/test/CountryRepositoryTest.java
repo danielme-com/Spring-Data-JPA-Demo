@@ -1,13 +1,16 @@
 package com.danielme.demo.springdatajpa.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+
 import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
-import java.util.List;
 
-import org.junit.Before;
+import java.util.Optional;
+
+import javax.persistence.Tuple;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,109 +18,117 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.danielme.demo.springdatajpa.ApplicationContext;
 import com.danielme.demo.springdatajpa.AuthenticationMockup;
 import com.danielme.demo.springdatajpa.model.Country;
+import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("file:src/main/resources/applicationContext.xml")
+//@ContextConfiguration("file:src/main/resources/applicationContext.xml")
+@ContextConfiguration(classes = { ApplicationContext.class })
+@Sql(scripts = { "/test.sql" })
 public class CountryRepositoryTest {
+
+    private static final Long SPAIN_ID = 2L;
 
     @Autowired
     private CountryRepository countryRepository;
 
-    @Before
-    @Transactional
-    public void setUp() throws Exception {
-        AuthenticationMockup.UserName = "dani";
-
-        // empty repository
-        countryRepository.deleteAllInBatch();
-
-        // insert
-        countryRepository.save(new Country("Spain", 47265321));
-        countryRepository.save(new Country("Mexico", 115296767));
-        countryRepository.save(new Country("Germany", 81799600));
-        countryRepository.save(new Country("Finland", 5470820));
-        countryRepository.save(new Country("Colombia", 47846160));
-        countryRepository.save(new Country("Costa Rica", 4586353));
-        countryRepository.save(new Country("Norway", 5136700));
-
-    }
-
     @Test
-    public void testAudit() throws Exception {
-        Country country = new Country();
-        country.setName("Bolivia");
-        country.setPopulation(10556105);
-
-        country = countryRepository.save(country);
-        assertTrue(country.getCreateBy().equals(country.getLastModifiedBy()));
-        assertTrue(country.getCreatedDate().equals(country.getLastModifiedDate()));
-
-        Thread.sleep(2000);
-
-        AuthenticationMockup.UserName = "update";
-        country.setName("Estado Plurinacional de Bolivia");
-        country = countryRepository.save(country);
-        assertTrue(country.getLastModifiedBy().equals(AuthenticationMockup.UserName));
-        assertTrue(country.getCreateBy().equals("dani"));
-        assertFalse(country.getCreatedDate().equals(country.getLastModifiedDate()));
-
-        AuthenticationMockup.UserName = "dani";
-        countryRepository.delete(country);
-
-    }
-
-    @Test
-    public void testSimpleQuerys() {
-        assertTrue(countryRepository.findByName("Germany").getName().equals("Germany"));
-        assertNull(countryRepository.findByName("France"));
-        assertTrue(countryRepository.countByPopulationGreaterThan(45000000) == 4);
-        assertTrue(countryRepository.findByPopulationGreaterThan(100000000).get(0).getName()
-                .equals("Mexico"));
+    public void testExists() {
         assertTrue(countryRepository.exists("Spain"));
-        assertTrue(
-                countryRepository.getByPopulationNamedQuery(5470820).getName().equals("Finland"));
-        assertFalse(countryRepository.exists("Italy"));
+    }
 
+    @Test
+    public void testNotExists() {
+        assertFalse(countryRepository.exists("Italy"));
+    }
+
+    @Test
+    public void testPopulation() {
+        assertEquals(3, countryRepository.countByPopulationGreaterThan(45000000));
+        assertEquals(3, countryRepository.findByPopulationGreaterThan(45000000).size());
+    }
+
+    @Test
+    public void testName() {
+        Optional<Country> opt = countryRepository.findByName("Norway");
+        assertTrue(opt.isPresent());
+        assertEquals("Norway", opt.get().getName());
+    }
+
+    @Test
+    public void testNoName() {
+        assertFalse(countryRepository.findByName("France").isPresent());
+    }
+
+    @Test
+    public void testNamedQuery() {
+        assertTrue(countryRepository.byPopulationNamedQuery(115296767).isPresent());
     }
 
     @Test
     public void testQuerysSortingAndPaging() {
-        List<Country> countries = countryRepository
-                .findByPopulationGreaterThanOrderByPopulationAsc(45000000);
-        assertTrue(countries.size() == 4);
-        assertTrue(countries.get(0).getName().equals("Spain"));
-        assertTrue(countries.get(3).getName().equals("Mexico"));
-
-        Page<Country> page0 = countryRepository.getByNameWithQuery("%i%",
-                new PageRequest(0, 4, new Sort(new Sort.Order(Sort.Direction.ASC, "name"))));
-        assertTrue(page0.getTotalElements() == 5);
+        Page<Country> page0 = countryRepository.findByNameWithQuery("%i%",
+                PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "name")));
+        assertTrue(page0.getTotalElements() == 4);
         assertTrue(page0.getTotalPages() == 2);
-        assertTrue(page0.isFirst());
         assertTrue(page0.getContent().get(0).getName().equals("Colombia"));
-
     }
 
     @Test
-    public void testModifyingQuerys() throws Exception {
-        Calendar creation = countryRepository.findByName("Norway").getCreation();
-        Thread.sleep(2000);
-        assertTrue(countryRepository.updateCreation(Calendar.getInstance()) == 7);
-        assertTrue(countryRepository.findByName("Norway").getCreation().after(creation));
-        assertTrue(countryRepository.deleteByName("%") == 0);
+    public void testUpdate() throws Exception {
+        Calendar creation = countryRepository.findByName("Norway").get().getCreation();
+        assertTrue(countryRepository.updateCreation(Calendar.getInstance()) == 5);
+        assertTrue(countryRepository.findByName("Norway").get().getCreation().after(creation));
+    }
+
+    @Test
+    public void testDelete() throws Exception {
         assertTrue(countryRepository.deleteByName("Norway") == 1);
     }
 
     @Test
     public void testJpaCriteria() {
-        assertTrue(countryRepository.findOne(CountrySpecifications.searchByName("Mexico")).getName()
-                .equals("Mexico"));
+        assertTrue(countryRepository.findOne(CountrySpecifications.searchByName("Mexico")).get()
+                .getName().equals("Mexico"));
+    }
+
+    @Test
+    public void testProjectionConstructor() {
+        Pair pair = countryRepository.getPairById(SPAIN_ID);
+        assertEquals(SPAIN_ID, pair.getId());
+        assertEquals("Spain", pair.getValue());
+    }
+
+    @Test
+    public void testProjectionTuple() {
+        Tuple tuple = countryRepository.getTupleById(SPAIN_ID);
+        assertEquals(SPAIN_ID, tuple.get("ID"));
+        assertEquals("Spain", tuple.get("value"));
+    }
+
+    @Test
+    public void testAudit() {
+        AuthenticationMockup.UserName = "dani";
+
+        Country country = countryRepository.save(new Country("Bolivia", 10556105));
+
+        assertTrue(country.getCreateBy().equals(country.getLastModifiedBy()));
+        assertTrue(country.getCreatedDate().equals(country.getLastModifiedDate()));
+
+        AuthenticationMockup.UserName = "update";
+        country.setName("Estado Plurinacional de Bolivia");
+        country = countryRepository.save(country);
+
+        assertTrue(country.getLastModifiedBy().equals(AuthenticationMockup.UserName));
+        assertTrue(country.getCreateBy().equals("dani"));
+        assertFalse(country.getCreatedDate().equals(country.getLastModifiedDate()));
     }
 
 }

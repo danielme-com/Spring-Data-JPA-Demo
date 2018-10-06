@@ -1,0 +1,6 @@
+TRUNCATE  `countries`;
+INSERT INTO `countries` (`id`, `createBy`, `createdDate`, `lastModifiedBy`, `lastModifiedDate`, `creation`, `name`, `population`) VALUES (1, 'dani', '2018-10-06 18:10:48', 'dani', '2018-10-06 18:10:48', '2018-10-06 18:10:48', 'Norway', 5136700);
+INSERT INTO `countries` (`id`, `createBy`, `createdDate`, `lastModifiedBy`, `lastModifiedDate`, `creation`, `name`, `population`) VALUES (2, 'dani', '2018-10-06 18:10:48', 'dani', '2018-10-06 18:10:48', '2018-10-06 18:10:48', 'Spain', 47265321);
+INSERT INTO `countries` (`id`, `createBy`, `createdDate`, `lastModifiedBy`, `lastModifiedDate`, `creation`, `name`, `population`) VALUES (3, 'dani', '2018-10-06 18:10:48', 'dani', '2018-10-06 18:10:48', '2018-10-06 18:10:48', 'Mexico', 115296767);
+INSERT INTO `countries` (`id`, `createBy`, `createdDate`, `lastModifiedBy`, `lastModifiedDate`, `creation`, `name`, `population`) VALUES (4, 'dani', '2018-10-06 18:10:48', 'dani', '2018-10-06 18:10:48', '2018-10-06 18:10:48', 'Colombia', 47846160);
+INSERT INTO `countries` (`id`, `createBy`, `createdDate`, `lastModifiedBy`, `lastModifiedDate`, `creation`, `name`, `population`) VALUES (5, 'dani', '2018-10-06 18:10:48', 'dani', '2018-10-06 18:10:48', '2018-10-06 18:10:48', 'Costa Rica', 4586353);

@@ -1,5 +1,7 @@
 package com.danielme.demo.springdatajpa.listeners;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +11,8 @@ import com.danielme.demo.springdatajpa.AuthenticationMockup;
 public class CustomAuditorAware implements AuditorAware<String> {
 
     @Override
-    public String getCurrentAuditor() {
-        return AuthenticationMockup.UserName;
+    public Optional<String> getCurrentAuditor() {
+        return Optional.of(AuthenticationMockup.UserName);
     }
 
 }

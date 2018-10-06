@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners({ AuditingEntityListener.class })
 @MappedSuperclass
 public class AuditableEntity {
+
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar createdDate;
