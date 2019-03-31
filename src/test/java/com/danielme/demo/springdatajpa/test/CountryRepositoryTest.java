@@ -29,7 +29,7 @@ import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration("file:src/main/resources/applicationContext.xml")
+// @ContextConfiguration("file:src/main/resources/applicationContext.xml")
 @ContextConfiguration(classes = { ApplicationContext.class })
 @Sql(scripts = { "/test.sql" })
 public class CountryRepositoryTest {
@@ -57,9 +57,9 @@ public class CountryRepositoryTest {
 
     @Test
     public void testName() {
-        Optional<Country> opt = countryRepository.findByName("Norway");
-        assertTrue(opt.isPresent());
-        assertEquals("Norway", opt.get().getName());
+        Optional<Country> optCountry = countryRepository.findByName("Norway");
+        assertTrue(optCountry.isPresent());
+        assertEquals("Norway", optCountry.get().getName());
     }
 
     @Test
@@ -76,27 +76,37 @@ public class CountryRepositoryTest {
     public void testQuerysSortingAndPaging() {
         Page<Country> page0 = countryRepository.findByNameWithQuery("%i%",
                 PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "name")));
-        assertTrue(page0.getTotalElements() == 4);
-        assertTrue(page0.getTotalPages() == 2);
-        assertTrue(page0.getContent().get(0).getName().equals("Colombia"));
+        assertEquals(4, page0.getTotalElements());
+        assertEquals(2, page0.getTotalPages());
+        assertEquals("Colombia", page0.getContent().get(0).getName());
     }
 
     @Test
     public void testUpdate() throws Exception {
         Calendar creation = countryRepository.findByName("Norway").get().getCreation();
-        assertTrue(countryRepository.updateCreation(Calendar.getInstance()) == 5);
+        assertEquals(5, countryRepository.updateCreation(Calendar.getInstance()));
         assertTrue(countryRepository.findByName("Norway").get().getCreation().after(creation));
     }
 
     @Test
-    public void testDelete() throws Exception {
-        assertTrue(countryRepository.deleteByName("Norway") == 1);
+    public void testDeleteByName() throws Exception {
+        assertEquals(1, countryRepository.deleteByName("Norway"));
+    }
+
+    @Test
+    public void testRemoveById() throws Exception {
+        assertEquals(1, countryRepository.removeById(SPAIN_ID));
+    }
+
+    @Test
+    public void testRemoveByIdWithQuery() throws Exception {
+        assertEquals(1, countryRepository.deleteCountryById(SPAIN_ID));
     }
 
     @Test
     public void testJpaCriteria() {
-        assertTrue(countryRepository.findOne(CountrySpecifications.searchByName("Mexico")).get()
-                .getName().equals("Mexico"));
+        assertEquals("Mexico", countryRepository
+                .findOne(CountrySpecifications.searchByName("Mexico")).get().getName());
     }
 
     @Test
