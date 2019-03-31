@@ -14,17 +14,19 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.repository.base.CustomBaseRepository;
 
-public interface CountryRepository extends CustomBaseRepository<Country, Long>, CountryRepositoryCustom,
-        JpaSpecificationExecutor<Country> {
+public interface CountryRepository extends CustomBaseRepository<Country, Long>,
+        CountryRepositoryCustom, JpaSpecificationExecutor<Country> {
     Optional<Country> findByName(String name);
 
-    @QueryHints(value = { @QueryHint(name = "org.hibernate.cacheable", value = "true") })
+    @QueryHints(value = { @QueryHint(name = "org.hibernate.cacheable",
+            value = "true") })
     List<Country> findByPopulationGreaterThan(Integer population);
 
     int countByPopulationGreaterThan(Integer population);
@@ -37,10 +39,10 @@ public interface CountryRepository extends CustomBaseRepository<Country, Long>, 
     Optional<Country> findByName(String name, Sort sort);
 
     List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);
-    
+
     @Query("select new com.danielme.demo.springdatajpa.model.Pair(c.id, c.name) from Country c where c.id = ?1")
     Pair getPairById(Long id);
-    
+
     @Query("select c.id as ID, c.name As value from Country c where c.id = ?1")
     Tuple getTupleById(Long id);
 
@@ -54,5 +56,13 @@ public interface CountryRepository extends CustomBaseRepository<Country, Long>, 
 
     @Transactional
     int deleteByName(String name);
+
+    @Transactional
+    int removeById(Long id);
+    
+    @Transactional
+    @Modifying
+    @Query("delete from Country where id=:id")
+    int deleteCountryById(@Param("id") Long id);
 
 }
