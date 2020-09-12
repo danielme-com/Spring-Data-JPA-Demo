@@ -68,10 +68,10 @@
                 <prop key="hibernate.connection.autocommit">${hibernate.connection.autocommit}</prop>
                 <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache}</prop>
                 <prop key="hibernate.cache.use_query_cache">${hibernate.query.cache}</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider
-                </prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
-                </prop>
+                <prop key="hibernate.cache.provider_class">org.ehcache.jsr107.EhcacheCachingProvider</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.internal.JCacheRegionFactory</prop>
+                <prop key="hibernate.javax.cache.uri">#{ new org.springframework.core.io.ClassPathResource("/cache.xml").getURL().toString()}</prop>
+
                 <!--useful for debugging -->
                 <prop key="hibernate.generate_statistics">${hibernate.statistics}</prop>
             </props>

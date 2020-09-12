@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0  http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.danielme.demo</groupId>
     <artifactId>spring-data-jpa-demo</artifactId>
-    <version>2.0</version>
+    <version>3.0</version>
     <name>spring-data-jpa-demo</name>
     <inceptionYear>2014</inceptionYear>
 
@@ -15,13 +15,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <hibernate.version>5.2.17.Final</hibernate.version>
-        <c3p0.version>0.9.1.2</c3p0.version>
+        <hibernate.version>5.4.21.Final</hibernate.version>
+        <c3p0.version>0.9.5.5</c3p0.version>
         <slf4jlog4j.version>1.7.7</slf4jlog4j.version>
-        <mysql.version>5.1.33</mysql.version>
-        <spring.data.jpa.version>2.1.0.RELEASE</spring.data.jpa.version>
+        <mysql.version>8.0.21</mysql.version>
+        <spring.data.jpa.version>2.3.3.RELEASE</spring.data.jpa.version>
         <spring.version>5.1.0.RELEASE</spring.version>
         <junit.version>4.12</junit.version>
+        <ehcache.version>3.9.0</ehcache.version>
 
     </properties>
 
@@ -108,8 +109,14 @@
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
+            <artifactId>hibernate-jcache</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
         </dependency>
 
         <dependency>
@@ -119,7 +126,7 @@
         </dependency>
 
         <dependency>
-            <groupId>c3p0</groupId>
+            <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>${c3p0.version}</version>
         </dependency>

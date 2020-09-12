@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<config
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'>
+
+    <service>
+        <jsr107:defaults enable-statistics="true"/>
+    </service>
+
+    <cache-template name="defaultCacheTemplate">
+        <expiry>
+            <ttl unit="seconds">3600</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1000</heap>
+            <offheap unit="MB">10</offheap>
+        </resources>
+    </cache-template>
+
+    <cache alias="default-update-timestamps-region"
+           uses-template="defaultCacheTemplate"/>
+
+    <cache alias="default-query-results-region"
+           uses-template="defaultCacheTemplate"/>
+
+    <cache alias="com.danielme.demo.springdatajpa.model.Country"
+           uses-template="defaultCacheTemplate"/>
+</config>
