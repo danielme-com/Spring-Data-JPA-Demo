@@ -1,10 +1,5 @@
 package com.danielme.demo.springdatajpa.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
-import static org.junit.Assert.assertTrue;
-
 import java.util.Calendar;
 
 import java.util.Optional;
@@ -28,6 +23,8 @@ import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration("file:src/main/resources/applicationContext.xml")
@@ -137,16 +134,16 @@ public class CountryRepositoryTest {
 
         Country country = countryRepository.save(new Country("Bolivia", 10556105));
 
-        assertTrue(country.getCreateBy().equals(country.getLastModifiedBy()));
-        assertTrue(country.getCreatedDate().equals(country.getLastModifiedDate()));
+        assertEquals(country.getCreateBy(), country.getLastModifiedBy());
+        assertEquals(country.getCreatedDate(), country.getLastModifiedDate());
 
         AuthenticationMockup.UserName = "update";
         country.setName("Estado Plurinacional de Bolivia");
         country = countryRepository.save(country);
 
-        assertTrue(country.getLastModifiedBy().equals(AuthenticationMockup.UserName));
-        assertTrue(country.getCreateBy().equals("dani"));
-        assertFalse(country.getCreatedDate().equals(country.getLastModifiedDate()));
+        assertEquals(country.getLastModifiedBy(), AuthenticationMockup.UserName);
+        assertEquals(country.getCreateBy(), "dani");
+        assertNotEquals(country.getCreatedDate(), country.getLastModifiedDate());
     }
 
 }
