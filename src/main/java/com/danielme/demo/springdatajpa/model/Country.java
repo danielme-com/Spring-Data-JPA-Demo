@@ -1,22 +1,22 @@
 package com.danielme.demo.springdatajpa.model;
 
+import javax.persistence.*;
 import java.util.Calendar;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Table(name = "countries")
 @NamedQuery(name = "Country.byPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
+@SqlResultSetMapping(
+        name = "pairConstructor",
+        classes = @ConstructorResult(targetClass = Pair.class,
+                columns = {
+                @ColumnResult(name = "id", type = Long.class),
+                @ColumnResult(name = "name", type = String.class)}))
+@NamedNativeQuery(
+        name = "Country.byPopulationNamedNativeQuery",
+        query = "select id, name FROM countries WHERE population = ?1",
+        resultSetMapping = "pairConstructor")
 public class Country extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

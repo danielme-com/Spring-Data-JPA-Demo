@@ -1,12 +1,12 @@
 package com.danielme.demo.springdatajpa.test;
 
-import java.util.Calendar;
-
-import java.util.Optional;
-
-import javax.persistence.Tuple;
-
+import com.danielme.demo.springdatajpa.ApplicationContext;
+import com.danielme.demo.springdatajpa.AuthenticationMockup;
+import com.danielme.demo.springdatajpa.model.Country;
+import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.model.PairProjection;
+import com.danielme.demo.springdatajpa.repository.CountryRepository;
+import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.danielme.demo.springdatajpa.ApplicationContext;
-import com.danielme.demo.springdatajpa.AuthenticationMockup;
-import com.danielme.demo.springdatajpa.model.Country;
-import com.danielme.demo.springdatajpa.model.Pair;
-import com.danielme.demo.springdatajpa.repository.CountryRepository;
-import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
+import javax.persistence.Tuple;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -68,6 +66,11 @@ public class CountryRepositoryTest {
     @Test
     public void testNamedQuery() {
         assertTrue(countryRepository.byPopulationNamedQuery(115296767).isPresent());
+    }
+
+    @Test
+    public void testNamedNativeQuery() {
+        assertEquals(countryRepository.byPopulationNamedNativeQuery(115296767).getValue(), "Mexico");
     }
 
     @Test
@@ -126,6 +129,19 @@ public class CountryRepositoryTest {
         PairProjection pair = countryRepository.getPairByIdInterface(SPAIN_ID);
         assertEquals(SPAIN_ID, pair.getId());
         assertEquals("Spain", pair.getValue());
+    }
+
+    @Test
+    public void testFindAllListNative() {
+        List<Country> countries = countryRepository.findAllNative();
+        assertEquals(5, countries.size());
+    }
+
+    @Test
+    public void testFindAllPageNative() {
+        Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "name")));
+        assertEquals(5, page.getTotalElements());
+        assertEquals(2, page.getTotalPages());
     }
 
     @Test

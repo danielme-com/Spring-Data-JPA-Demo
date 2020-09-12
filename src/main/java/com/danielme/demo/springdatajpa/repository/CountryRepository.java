@@ -35,6 +35,15 @@ public interface CountryRepository extends CustomBaseRepository<Country, Long>,
     @Query("from Country c where lower(c.name) like lower(?1)")
     Page<Country> findByNameWithQuery(String name, Pageable page);
 
+    @Query(nativeQuery = true)
+    Pair byPopulationNamedNativeQuery(Integer population);
+
+    @Query(value = "select * from countries", nativeQuery = true)
+    List<Country> findAllNative();
+
+    @Query(value = "select * from countries", nativeQuery = true)
+    Page<Country> findAllNative(Pageable pageable);
+
     Optional<Country> byPopulationNamedQuery(Integer population);
 
     Optional<Country> findByName(String name, Sort sort);
