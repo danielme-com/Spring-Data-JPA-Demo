@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.persistence.Tuple;
 
+import com.danielme.demo.springdatajpa.model.PairProjection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-// @ContextConfiguration("file:src/main/resources/applicationContext.xml")
-@ContextConfiguration(classes = { ApplicationContext.class })
-@Sql(scripts = { "/test.sql" })
+//@ContextConfiguration("file:src/main/resources/applicationContext.xml")
+@ContextConfiguration(classes = {ApplicationContext.class})
+@Sql(scripts = {"/test.sql"})
 public class CountryRepositoryTest {
 
     private static final Long SPAIN_ID = 2L;
@@ -82,24 +83,24 @@ public class CountryRepositoryTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void testUpdate() {
         Calendar creation = countryRepository.findByName("Norway").get().getCreation();
         assertEquals(5, countryRepository.updateCreation(Calendar.getInstance()));
         assertTrue(countryRepository.findByName("Norway").get().getCreation().after(creation));
     }
 
     @Test
-    public void testDeleteByName() throws Exception {
+    public void testDeleteByName() {
         assertEquals(1, countryRepository.deleteByName("Norway"));
     }
 
     @Test
-    public void testRemoveById() throws Exception {
+    public void testRemoveById() {
         assertEquals(1, countryRepository.removeById(SPAIN_ID));
     }
 
     @Test
-    public void testRemoveByIdWithQuery() throws Exception {
+    public void testRemoveByIdWithQuery() {
         assertEquals(1, countryRepository.deleteCountryById(SPAIN_ID));
     }
 
@@ -121,6 +122,13 @@ public class CountryRepositoryTest {
         Tuple tuple = countryRepository.getTupleById(SPAIN_ID);
         assertEquals(SPAIN_ID, tuple.get("ID"));
         assertEquals("Spain", tuple.get("value"));
+    }
+
+    @Test
+    public void testProjectionInterface() {
+        PairProjection pair = countryRepository.getPairByIdInterface(SPAIN_ID);
+        assertEquals(SPAIN_ID, pair.getId());
+        assertEquals("Spain", pair.getValue());
     }
 
     @Test

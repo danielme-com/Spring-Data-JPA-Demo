@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.persistence.QueryHint;
 import javax.persistence.Tuple;
 
+import com.danielme.demo.springdatajpa.model.PairProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,6 +43,9 @@ public interface CountryRepository extends CustomBaseRepository<Country, Long>,
 
     @Query("select new com.danielme.demo.springdatajpa.model.Pair(c.id, c.name) from Country c where c.id = ?1")
     Pair getPairById(Long id);
+
+    @Query("select c.id as id, c.name as value from Country c where c.id = ?1")
+    PairProjection getPairByIdInterface(Long id);
 
     @Query("select c.id as ID, c.name As value from Country c where c.id = ?1")
     Tuple getTupleById(Long id);
