@@ -20,7 +20,7 @@
         <slf4jlog4j.version>1.7.7</slf4jlog4j.version>
         <mysql.version>8.0.21</mysql.version>
         <spring.data.jpa.version>2.3.3.RELEASE</spring.data.jpa.version>
-        <spring.version>5.1.0.RELEASE</spring.version>
+        <spring.version>5.2.8.RELEASE</spring.version>
         <junit.version>4.12</junit.version>
         <ehcache.version>3.9.0</ehcache.version>
 
