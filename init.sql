@@ -1,0 +1,4 @@
+CREATE DATABASE countries;
+CREATE USER 'user'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON countries.* TO 'user'@'%';
+FLUSH PRIVILEGES;
