@@ -32,6 +32,10 @@ public interface CountryRepository extends CustomBaseRepository<Country, Long>,
 
     int countByPopulationGreaterThan(Integer population);
 
+    List<Country> findByConfederationName(String confederationName);
+
+    List<Country> findByNameContainingIgnoreCase(String name);
+
     @Query("from Country c where lower(c.name) like lower(?1)")
     Page<Country> findByNameWithQuery(String name, Pageable page);
 

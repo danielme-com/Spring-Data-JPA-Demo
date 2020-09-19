@@ -2,6 +2,7 @@ package com.danielme.demo.springdatajpa.test;
 
 import com.danielme.demo.springdatajpa.ApplicationContext;
 import com.danielme.demo.springdatajpa.AuthenticationMockup;
+import com.danielme.demo.springdatajpa.model.Confederation;
 import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.model.PairProjection;
@@ -56,6 +57,14 @@ public class CountryRepositoryTest {
         Optional<Country> optCountry = countryRepository.findByName("Norway");
         assertTrue(optCountry.isPresent());
         assertEquals("Norway", optCountry.get().getName());
+    }
+
+    @Test
+    public void testFindByConfederation() {
+        List<Country> countries = countryRepository.findByConfederationName("CONMEBOL");
+
+        assertEquals(1, countries.size());
+        assertEquals("Colombia", countries.get(0).getName());
     }
 
     @Test
@@ -148,7 +157,9 @@ public class CountryRepositoryTest {
     public void testAudit() {
         AuthenticationMockup.UserName = "dani";
 
-        Country country = countryRepository.save(new Country("Bolivia", 10556105));
+        Confederation confederation = new Confederation(3L, "CONMEBOL");
+
+        Country country = countryRepository.save(new Country("Bolivia", 10556105, confederation));
 
         assertEquals(country.getCreateBy(), country.getLastModifiedBy());
         assertEquals(country.getCreatedDate(), country.getLastModifiedDate());
