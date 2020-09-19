@@ -11,13 +11,14 @@ import java.util.Calendar;
         name = "pairConstructor",
         classes = @ConstructorResult(targetClass = Pair.class,
                 columns = {
-                @ColumnResult(name = "id", type = Long.class),
-                @ColumnResult(name = "name", type = String.class)}))
+                        @ColumnResult(name = "id", type = Long.class),
+                        @ColumnResult(name = "name", type = String.class)}))
 @NamedNativeQuery(
         name = "Country.byPopulationNamedNativeQuery",
         query = "select id, name FROM countries WHERE population = ?1",
         resultSetMapping = "pairConstructor")
 public class Country extends AuditableEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,14 +33,19 @@ public class Country extends AuditableEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar creation;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "confederation_id")
+    private Confederation confederation;
+
     public Country() {
         super();
     }
 
-    public Country(String name, Integer population) {
+    public Country(String name, Integer population, Confederation confederation) {
         super();
         this.name = name;
         this.population = population;
+        this.confederation = confederation;
     }
 
     @PrePersist
@@ -79,4 +85,11 @@ public class Country extends AuditableEntity {
         this.creation = creation;
     }
 
+    public Confederation getConfederation() {
+        return confederation;
+    }
+
+    public void setConfederation(Confederation confederation) {
+        this.confederation = confederation;
+    }
 }
