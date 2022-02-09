@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <hibernate.version>5.4.21.Final</hibernate.version>
+        <hibernate.version>5.4.24.Final</hibernate.version>
         <c3p0.version>0.9.5.5</c3p0.version>
         <slf4jlog4j.version>1.7.7</slf4jlog4j.version>
         <mysql.version>8.0.21</mysql.version>
