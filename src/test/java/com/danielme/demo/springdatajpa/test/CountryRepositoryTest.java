@@ -24,8 +24,8 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //@ContextConfiguration("file:src/main/resources/applicationContext.xml")
-@ContextConfiguration(classes = {ApplicationContext.class})
-@Sql(scripts = {"/test.sql"})
+@ContextConfiguration(classes = ApplicationContext.class)
+@Sql("/test.sql")
 public class CountryRepositoryTest {
 
     private static final Long SPAIN_ID = 2L;
