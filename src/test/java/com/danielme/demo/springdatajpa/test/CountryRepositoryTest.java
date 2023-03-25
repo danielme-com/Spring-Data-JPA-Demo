@@ -150,7 +150,7 @@ public class CountryRepositoryTest {
 
     @Test
     public void testFindAllPageNative() {
-        Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "name")));
+        Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3));
 
         assertEquals(5, page.getTotalElements());
         assertEquals(2, page.getTotalPages());

@@ -47,7 +47,9 @@ public interface CountryRepository extends Repository<Country, Long> {
     @Query(value = "select * from countries", nativeQuery = true)
     List<Country> findAllNative();
 
-    @Query(value = "select * from countries", nativeQuery = true)
+    @Query(value = "select * from countries order by name",
+            nativeQuery = true,
+            countQuery = "select count(*) from countries")
     Page<Country> findAllNative(Pageable pageable);
 
     Optional<Country> byPopulationNamedQuery(Integer population);
