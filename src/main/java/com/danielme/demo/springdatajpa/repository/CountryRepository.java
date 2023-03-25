@@ -38,6 +38,9 @@ public interface CountryRepository extends Repository<Country, Long> {
     @Query(nativeQuery = true)
     Pair byPopulationNamedNativeQuery(Integer population);
 
+    @Query(value = "select id, name as value FROM countries WHERE population = :population", nativeQuery = true)
+    PairProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
+
     @Query(value = "select * from countries", nativeQuery = true)
     List<Country> findAllNative();
 

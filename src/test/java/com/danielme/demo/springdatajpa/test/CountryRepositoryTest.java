@@ -31,6 +31,8 @@ public class CountryRepositoryTest {
     private static final String SPAIN = "Spain";
     private static final String NORWAY = "Norway";
     private static final String COLOMBIA = "Colombia";
+    public static final int MEXICO_POPULATION = 115296767;
+    public static final String MEXICO = "Mexico";
 
     @Autowired
     private CountryRepository countryRepository;
@@ -73,14 +75,21 @@ public class CountryRepositoryTest {
 
     @Test
     public void testNamedQuery() {
-        assertTrue(countryRepository.byPopulationNamedQuery(115296767).isPresent());
+        assertTrue(countryRepository.byPopulationNamedQuery(MEXICO_POPULATION).isPresent());
     }
 
     @Test
     public void testNamedNativeQuery() {
-        String value = countryRepository.byPopulationNamedNativeQuery(115296767).getValue();
+        String value = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION).getValue();
 
-        assertEquals("Mexico", value);
+        assertEquals(MEXICO, value);
+    }
+
+    @Test
+    public void testProjectionNativeQuery() {
+        String value = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION).getValue();
+
+        assertEquals(MEXICO, value);
     }
 
     @Test
