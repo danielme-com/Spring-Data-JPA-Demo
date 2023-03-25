@@ -15,13 +15,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <hibernate.version>5.4.21.Final</hibernate.version>
+        <hibernate.version>5.6.14.Final</hibernate.version>
         <c3p0.version>0.9.5.5</c3p0.version>
-        <slf4jlog4j.version>1.7.7</slf4jlog4j.version>
+        <slf4jlog4j.version>1.7.36</slf4jlog4j.version>
         <mysql.version>8.0.32</mysql.version>
-        <spring.data.jpa.version>2.3.3.RELEASE</spring.data.jpa.version>
-        <spring.version>5.2.8.RELEASE</spring.version>
-        <junit.version>4.13</junit.version>
+        <spring.data.jpa.version>2.7.10</spring.data.jpa.version>
+        <spring.version>5.3.26</spring.version>
+        <junit.version>4.13.2</junit.version>
         <ehcache.version>3.9.0</ehcache.version>
 
     </properties>
@@ -62,27 +62,6 @@
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>enforce-java</id>
-                            <goals>
-                                <goal>enforce</goal>
-                            </goals>
-                            <configuration>
-                                <rules>
-                                    <requireJavaVersion>
-                                        <version>${java.version}</version>
-                                    </requireJavaVersion>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
             </plugins>
         </pluginManagement>
     </build>
@@ -99,12 +78,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <version>1.0.2.Final</version>
         </dependency>
 
         <dependency>
