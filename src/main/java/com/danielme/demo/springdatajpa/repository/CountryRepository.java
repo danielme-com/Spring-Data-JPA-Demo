@@ -67,8 +67,7 @@ public interface CountryRepository extends Repository<Country, Long> {
     @Query("select c.id as id, c.name as name from Country c where c.id = ?1")
     IdNameProjection getAsIdNameInterfaceById(Long id);
 
-    @Query("select case when (count(c) > 0)  then true else false end from Country c where c.name = ?1")
-    boolean exists(String name);
+    boolean existsByPopulationGreaterThan(int population);
 
     @Transactional
     @Modifying

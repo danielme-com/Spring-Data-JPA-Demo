@@ -38,18 +38,13 @@ public class CountryRepositoryTest {
     private CountryRepository countryRepository;
 
     @Test
-    public void testExists() {
-        assertTrue(countryRepository.exists(SPAIN));
+    public void testExistsByPopulationGreaterThan() {
+        assertFalse(countryRepository.existsByPopulationGreaterThan(150000000));
     }
 
     @Test
     public void testFindByName() {
         assertEquals(SPAIN, countryRepository.findNameById(SPAIN_ID).get());
-    }
-
-    @Test
-    public void testNotExists() {
-        assertFalse(countryRepository.exists("Italy"));
     }
 
     @Test
