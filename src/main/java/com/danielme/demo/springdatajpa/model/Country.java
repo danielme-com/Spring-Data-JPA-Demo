@@ -9,7 +9,7 @@ import java.util.Calendar;
 @NamedQuery(name = "Country.byPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
 @SqlResultSetMapping(
         name = "pairConstructor",
-        classes = @ConstructorResult(targetClass = Pair.class,
+        classes = @ConstructorResult(targetClass = IdValueDTO.class,
                 columns = {
                         @ColumnResult(name = "id", type = Long.class),
                         @ColumnResult(name = "name", type = String.class)}))

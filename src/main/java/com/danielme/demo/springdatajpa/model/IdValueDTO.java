@@ -1,11 +1,11 @@
 package com.danielme.demo.springdatajpa.model;
 
-public class Pair {
+public class IdValueDTO {
 
     private Long id;
     private String value;
 
-    public Pair(Long id, String name) {
+    public IdValueDTO(Long id, String name) {
         super();
         this.id = id;
         this.value = name;

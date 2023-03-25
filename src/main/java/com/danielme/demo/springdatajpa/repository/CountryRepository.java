@@ -1,7 +1,7 @@
 package com.danielme.demo.springdatajpa.repository;
 
 import com.danielme.demo.springdatajpa.model.Country;
-import com.danielme.demo.springdatajpa.model.Pair;
+import com.danielme.demo.springdatajpa.model.IdValueDTO;
 import com.danielme.demo.springdatajpa.model.PairProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +39,7 @@ public interface CountryRepository extends Repository<Country, Long> {
     //Page<Country> findByNameWithQuery(String name, Pageable page);
 
     @Query(nativeQuery = true)
-    Pair byPopulationNamedNativeQuery(Integer population);
+    IdValueDTO byPopulationNamedNativeQuery(Integer population);
 
     @Query(value = "select id, name as value FROM countries WHERE population = :population", nativeQuery = true)
     PairProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
@@ -58,8 +58,8 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);
 
-    @Query("select new com.danielme.demo.springdatajpa.model.Pair(c.id, c.name) from Country c where c.id = ?1")
-    Pair getPairById(Long id);
+    @Query("select new com.danielme.demo.springdatajpa.model.IdValueDTO(c.id, c.name) from Country c where c.id = ?1")
+    IdValueDTO getPairById(Long id);
 
     @Query("select c.id as id, c.name as value from Country c where c.id = ?1")
     PairProjection getPairByIdInterface(Long id);
