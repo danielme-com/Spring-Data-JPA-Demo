@@ -32,8 +32,11 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByNameContainingIgnoreCase(String name);
 
-    @Query("from Country c where lower(c.name) like lower(?1)")
-    Page<Country> findByNameWithQuery(String name, Pageable page);
+    @Query("from Country c where lower(c.name) like lower(:name)")
+    Page<Country> findByNameWithQuery(@Param("name")String name, Pageable page);
+
+    //@Query("from Country c where lower(c.name) like lower(?1)")
+    //Page<Country> findByNameWithQuery(String name, Pageable page);
 
     @Query(nativeQuery = true)
     Pair byPopulationNamedNativeQuery(Integer population);
