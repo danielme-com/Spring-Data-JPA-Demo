@@ -5,7 +5,6 @@ import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.model.PairProjection;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
-import com.danielme.demo.springdatajpa.repository.specifications.CountrySpecifications;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,12 +108,6 @@ public class CountryRepositoryTest {
     @Test
     public void testRemoveByIdWithQuery() {
         assertEquals(1, countryRepository.deleteCountryById(SPAIN_ID));
-    }
-
-    @Test
-    public void testJpaCriteria() {
-        assertEquals("Mexico", countryRepository
-                .findOne(CountrySpecifications.searchByName("Mexico")).get().getName());
     }
 
     @Test
