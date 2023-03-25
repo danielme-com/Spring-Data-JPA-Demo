@@ -15,7 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.persistence.Tuple;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -123,14 +122,6 @@ public class CountryRepositoryTest {
 
         assertEquals(SPAIN_ID, pair.getId());
         assertEquals(SPAIN, pair.getValue());
-    }
-
-    @Test
-    public void testProjectionTuple() {
-        Tuple tuple = countryRepository.getTupleById(SPAIN_ID);
-
-        assertEquals(SPAIN_ID, tuple.get("ID"));
-        assertEquals(SPAIN, tuple.get("value"));
     }
 
     @Test

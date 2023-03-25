@@ -14,7 +14,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.QueryHint;
-import javax.persistence.Tuple;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -56,9 +55,6 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     @Query("select c.id as id, c.name as value from Country c where c.id = ?1")
     PairProjection getPairByIdInterface(Long id);
-
-    @Query("select c.id as ID, c.name As value from Country c where c.id = ?1")
-    Tuple getTupleById(Long id);
 
     @Query("select case when (count(c) > 0)  then true else false end from Country c where c.name = ?1")
     boolean exists(String name);
