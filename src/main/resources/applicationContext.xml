@@ -14,8 +14,6 @@
         base-package="com.danielme.demo.springdatajpa.repository"
         />
 
-    <jpa:auditing auditor-aware-ref="customAuditorAware" />
-
     <!-- Autowired -->
     <!-- used to activate annotations in beans already registered in the 
         application context (no matter if they were defined with XML or by package 
@@ -75,11 +73,6 @@
                 <!--useful for debugging -->
                 <prop key="hibernate.generate_statistics">${hibernate.statistics}</prop>
             </props>
-        </property>
-
-        <property name="loadTimeWeaver">
-            <bean
-                class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
         </property>
 
     </bean>
