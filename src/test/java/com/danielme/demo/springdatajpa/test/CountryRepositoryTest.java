@@ -29,13 +29,16 @@ import static org.junit.Assert.*;
 public class CountryRepositoryTest {
 
     private static final Long SPAIN_ID = 2L;
+    private static final String SPAIN = "Spain";
+    private static final String NORWAY = "Norway";
+    private static final String COLOMBIA = "Colombia";
 
     @Autowired
     private CountryRepository countryRepository;
 
     @Test
     public void testExists() {
-        assertTrue(countryRepository.exists("Spain"));
+        assertTrue(countryRepository.exists(SPAIN));
     }
 
     @Test
@@ -51,9 +54,9 @@ public class CountryRepositoryTest {
 
     @Test
     public void testName() {
-        Optional<Country> optCountry = countryRepository.findByName("Norway");
+        Optional<Country> optCountry = countryRepository.findByName(NORWAY);
         assertTrue(optCountry.isPresent());
-        assertEquals("Norway", optCountry.get().getName());
+        assertEquals(NORWAY, optCountry.get().getName());
     }
 
     @Test
@@ -61,7 +64,7 @@ public class CountryRepositoryTest {
         List<Country> countries = countryRepository.findByConfederationName("CONMEBOL");
 
         assertEquals(1, countries.size());
-        assertEquals("Colombia", countries.get(0).getName());
+        assertEquals(COLOMBIA, countries.get(0).getName());
     }
 
     @Test
@@ -76,28 +79,32 @@ public class CountryRepositoryTest {
 
     @Test
     public void testNamedNativeQuery() {
-        assertEquals(countryRepository.byPopulationNamedNativeQuery(115296767).getValue(), "Mexico");
+        String value = countryRepository.byPopulationNamedNativeQuery(115296767).getValue();
+
+        assertEquals("Mexico", value);
     }
 
     @Test
     public void testQuerysSortingAndPaging() {
         Page<Country> page0 = countryRepository.findByNameWithQuery("%i%",
                 PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "name")));
+
         assertEquals(4, page0.getTotalElements());
         assertEquals(2, page0.getTotalPages());
-        assertEquals("Colombia", page0.getContent().get(0).getName());
+        assertEquals(COLOMBIA, page0.getContent().get(0).getName());
     }
 
     @Test
     public void testUpdate() {
-        Calendar creation = countryRepository.findByName("Norway").get().getCreation();
+        Calendar creation = countryRepository.findByName(NORWAY).get().getCreation();
+
         assertEquals(5, countryRepository.updateCreation(Calendar.getInstance()));
-        assertTrue(countryRepository.findByName("Norway").get().getCreation().after(creation));
+        assertTrue(countryRepository.findByName(NORWAY).get().getCreation().after(creation));
     }
 
     @Test
     public void testDeleteByName() {
-        assertEquals(1, countryRepository.deleteByName("Norway"));
+        assertEquals(1, countryRepository.deleteByName(NORWAY));
     }
 
     @Test
@@ -113,33 +120,38 @@ public class CountryRepositoryTest {
     @Test
     public void testProjectionConstructor() {
         Pair pair = countryRepository.getPairById(SPAIN_ID);
+
         assertEquals(SPAIN_ID, pair.getId());
-        assertEquals("Spain", pair.getValue());
+        assertEquals(SPAIN, pair.getValue());
     }
 
     @Test
     public void testProjectionTuple() {
         Tuple tuple = countryRepository.getTupleById(SPAIN_ID);
+
         assertEquals(SPAIN_ID, tuple.get("ID"));
-        assertEquals("Spain", tuple.get("value"));
+        assertEquals(SPAIN, tuple.get("value"));
     }
 
     @Test
     public void testProjectionInterface() {
         PairProjection pair = countryRepository.getPairByIdInterface(SPAIN_ID);
+
         assertEquals(SPAIN_ID, pair.getId());
-        assertEquals("Spain", pair.getValue());
+        assertEquals(SPAIN, pair.getValue());
     }
 
     @Test
     public void testFindAllListNative() {
         List<Country> countries = countryRepository.findAllNative();
+
         assertEquals(5, countries.size());
     }
 
     @Test
     public void testFindAllPageNative() {
         Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "name")));
+
         assertEquals(5, page.getTotalElements());
         assertEquals(2, page.getTotalPages());
     }
