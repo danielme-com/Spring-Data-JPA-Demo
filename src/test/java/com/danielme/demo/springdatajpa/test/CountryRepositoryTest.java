@@ -53,6 +53,15 @@ public class CountryRepositoryTest {
     }
 
     @Test
+    public void testFindByNameContainingIgnoreCase() {
+        List<Country> countriesWithP = countryRepository.findByNameContainingIgnoreCase("p");
+
+        assertEquals(1, countriesWithP.size());
+        assertEquals(SPAIN_ID, countriesWithP.get(0).getId());
+    }
+
+
+    @Test
     public void testPopulation() {
         assertEquals(3, countryRepository.countByPopulationGreaterThan(45000000));
         assertEquals(3, countryRepository.findByPopulationGreaterThan(45000000).size());
