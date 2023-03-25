@@ -1,33 +1,30 @@
 package com.danielme.demo.springdatajpa.repository;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.QueryHint;
-import javax.persistence.Tuple;
-
+import com.danielme.demo.springdatajpa.model.Country;
+import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.model.PairProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
+import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.danielme.demo.springdatajpa.model.Country;
-import com.danielme.demo.springdatajpa.model.Pair;
-import com.danielme.demo.springdatajpa.repository.base.CustomBaseRepository;
+import javax.persistence.QueryHint;
+import javax.persistence.Tuple;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Optional;
 
-public interface CountryRepository extends CustomBaseRepository<Country, Long>,
-        CountryRepositoryCustom, JpaSpecificationExecutor<Country> {
+public interface CountryRepository extends Repository<Country, Long> {
+
     Optional<Country> findByName(String name);
 
-    @QueryHints(value = { @QueryHint(name = "org.hibernate.cacheable",
-            value = "true") })
+    @QueryHints(value = {@QueryHint(name = "org.hibernate.cacheable",
+            value = "true")})
     List<Country> findByPopulationGreaterThan(Integer population);
 
     int countByPopulationGreaterThan(Integer population);
@@ -76,7 +73,7 @@ public interface CountryRepository extends CustomBaseRepository<Country, Long>,
 
     @Transactional
     int removeById(Long id);
-    
+
     @Transactional
     @Modifying
     @Query("delete from Country where id=:id")

@@ -1,6 +1,5 @@
 package com.danielme.demo.springdatajpa;
 
-import com.danielme.demo.springdatajpa.repository.base.CustomBaseRepositoryFactoryBean;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +23,7 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 @ComponentScan("com.danielme")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.danielme.demo.springdatajpa.repository", repositoryFactoryBeanClass = CustomBaseRepositoryFactoryBean.class)
+@EnableJpaRepositories(basePackages = "com.danielme.demo.springdatajpa.repository")
 public class ApplicationContext {
 
     @Bean(destroyMethod = "close")
