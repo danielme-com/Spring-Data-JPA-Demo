@@ -1,22 +1,22 @@
 package com.danielme.demo.springdatajpa.model;
 
-public class IdValueDTO {
+public class IdNameDTO {
 
     private Long id;
-    private String value;
+    private String name;
 
-    public IdValueDTO(Long id, String name) {
+    public IdNameDTO(Long id, String name) {
         super();
         this.id = id;
-        this.value = name;
+        this.name = name;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
 }

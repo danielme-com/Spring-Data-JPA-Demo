@@ -1,8 +1,8 @@
 package com.danielme.demo.springdatajpa.repository;
 
 import com.danielme.demo.springdatajpa.model.Country;
-import com.danielme.demo.springdatajpa.model.IdValueDTO;
-import com.danielme.demo.springdatajpa.model.IdValueProjection;
+import com.danielme.demo.springdatajpa.model.IdNameDTO;
+import com.danielme.demo.springdatajpa.model.IdNameProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,7 +12,6 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.QueryHint;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +28,9 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByNameContainingIgnoreCase(String name);
 
+    @Query("select c.name from Country c where c.id = :id")
+    Optional<String> findNameById(Long id);
+
     @Query("from Country c where lower(c.name) like lower(:name)")
     Page<Country> findByNameWithQuery(@Param("name")String name, Pageable page);
 
@@ -36,10 +38,10 @@ public interface CountryRepository extends Repository<Country, Long> {
     //Page<Country> findByNameWithQuery(String name, Pageable page);
 
     @Query(nativeQuery = true)
-    IdValueDTO byPopulationNamedNativeQuery(Integer population);
+    IdNameDTO byPopulationNamedNativeQuery(Integer population);
 
-    @Query(value = "select id, name as value FROM countries WHERE population = :population", nativeQuery = true)
-    IdValueProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
+    @Query(value = "select id, name FROM countries WHERE population = :population", nativeQuery = true)
+    IdNameProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
 
     @Query(value = "select * from countries", nativeQuery = true)
     List<Country> findAllNative();
@@ -55,11 +57,15 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);
 
-    @Query("select new com.danielme.demo.springdatajpa.model.IdValueDTO(c.id, c.name) from Country c where c.id = ?1")
-    IdValueDTO getAsIdValueDtoById(Long id);
+    @Query("select new com.danielme.demo.springdatajpa.model.IdNameDTO(c.id, c.name) from Country c where c.id = ?1")
+    IdNameDTO getAsIdNameDtoById(Long id);
 
-    @Query("select c.id as id, c.name as value from Country c where c.id = ?1")
-    IdValueProjection getAsIdValueInterfaceById(Long id);
+    IdNameDTO findAsIdNameDtoById(Long id);
+
+    IdNameProjection findAsIdNameProjectionById(Long id);
+
+    @Query("select c.id as id, c.name as name from Country c where c.id = ?1")
+    IdNameProjection getAsIdNameInterfaceById(Long id);
 
     @Query("select case when (count(c) > 0)  then true else false end from Country c where c.name = ?1")
     boolean exists(String name);

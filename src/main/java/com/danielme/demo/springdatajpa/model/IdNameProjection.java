@@ -1,8 +1,8 @@
 package com.danielme.demo.springdatajpa.model;
 
-public interface IdValueProjection {
+public interface IdNameProjection {
 
     Long getId();
 
-    String getValue();
+    String getName();
 }

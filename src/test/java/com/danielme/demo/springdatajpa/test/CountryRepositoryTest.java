@@ -2,8 +2,8 @@ package com.danielme.demo.springdatajpa.test;
 
 import com.danielme.demo.springdatajpa.ApplicationContext;
 import com.danielme.demo.springdatajpa.model.Country;
-import com.danielme.demo.springdatajpa.model.IdValueDTO;
-import com.danielme.demo.springdatajpa.model.IdValueProjection;
+import com.danielme.demo.springdatajpa.model.IdNameDTO;
+import com.danielme.demo.springdatajpa.model.IdNameProjection;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +40,11 @@ public class CountryRepositoryTest {
     @Test
     public void testExists() {
         assertTrue(countryRepository.exists(SPAIN));
+    }
+
+    @Test
+    public void testFindByName() {
+        assertEquals(SPAIN, countryRepository.findNameById(SPAIN_ID).get());
     }
 
     @Test
@@ -80,14 +85,14 @@ public class CountryRepositoryTest {
 
     @Test
     public void testNamedNativeQuery() {
-        String value = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION).getValue();
+        String value = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION).getName();
 
         assertEquals(MEXICO, value);
     }
 
     @Test
     public void testProjectionNativeQuery() {
-        String value = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION).getValue();
+        String value = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION).getName();
 
         assertEquals(MEXICO, value);
     }
@@ -127,18 +132,18 @@ public class CountryRepositoryTest {
 
     @Test
     public void testProjectionConstructor() {
-        IdValueDTO idValueDTO = countryRepository.getAsIdValueDtoById(SPAIN_ID);
+        IdNameDTO idNameDTO = countryRepository.getAsIdNameDtoById(SPAIN_ID);
 
-        assertEquals(SPAIN_ID, idValueDTO.getId());
-        assertEquals(SPAIN, idValueDTO.getValue());
+        assertEquals(SPAIN_ID, idNameDTO.getId());
+        assertEquals(SPAIN, idNameDTO.getName());
     }
 
     @Test
     public void testProjectionInterface() {
-        IdValueProjection idValue = countryRepository.getAsIdValueInterfaceById(SPAIN_ID);
+        IdNameProjection idName = countryRepository.getAsIdNameInterfaceById(SPAIN_ID);
 
-        assertEquals(SPAIN_ID, idValue.getId());
-        assertEquals(SPAIN, idValue.getValue());
+        assertEquals(SPAIN_ID, idName.getId());
+        assertEquals(SPAIN, idName.getName());
     }
 
     @Test
