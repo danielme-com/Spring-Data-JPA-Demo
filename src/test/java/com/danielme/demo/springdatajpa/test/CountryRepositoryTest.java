@@ -3,7 +3,7 @@ package com.danielme.demo.springdatajpa.test;
 import com.danielme.demo.springdatajpa.ApplicationContext;
 import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.IdValueDTO;
-import com.danielme.demo.springdatajpa.model.PairProjection;
+import com.danielme.demo.springdatajpa.model.IdValueProjection;
 import com.danielme.demo.springdatajpa.repository.CountryRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -127,7 +127,7 @@ public class CountryRepositoryTest {
 
     @Test
     public void testProjectionConstructor() {
-        IdValueDTO idValueDTO = countryRepository.getPairById(SPAIN_ID);
+        IdValueDTO idValueDTO = countryRepository.getAsIdValueDtoById(SPAIN_ID);
 
         assertEquals(SPAIN_ID, idValueDTO.getId());
         assertEquals(SPAIN, idValueDTO.getValue());
@@ -135,10 +135,10 @@ public class CountryRepositoryTest {
 
     @Test
     public void testProjectionInterface() {
-        PairProjection pair = countryRepository.getPairByIdInterface(SPAIN_ID);
+        IdValueProjection idValue = countryRepository.getAsIdValueInterfaceById(SPAIN_ID);
 
-        assertEquals(SPAIN_ID, pair.getId());
-        assertEquals(SPAIN, pair.getValue());
+        assertEquals(SPAIN_ID, idValue.getId());
+        assertEquals(SPAIN, idValue.getValue());
     }
 
     @Test

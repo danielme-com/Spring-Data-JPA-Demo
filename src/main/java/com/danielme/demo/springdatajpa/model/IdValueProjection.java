@@ -1,6 +1,6 @@
 package com.danielme.demo.springdatajpa.model;
 
-public interface PairProjection {
+public interface IdValueProjection {
 
     Long getId();
 

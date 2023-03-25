@@ -2,7 +2,7 @@ package com.danielme.demo.springdatajpa.repository;
 
 import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.IdValueDTO;
-import com.danielme.demo.springdatajpa.model.PairProjection;
+import com.danielme.demo.springdatajpa.model.IdValueProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,7 +42,7 @@ public interface CountryRepository extends Repository<Country, Long> {
     IdValueDTO byPopulationNamedNativeQuery(Integer population);
 
     @Query(value = "select id, name as value FROM countries WHERE population = :population", nativeQuery = true)
-    PairProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
+    IdValueProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
 
     @Query(value = "select * from countries", nativeQuery = true)
     List<Country> findAllNative();
@@ -59,10 +59,10 @@ public interface CountryRepository extends Repository<Country, Long> {
     List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);
 
     @Query("select new com.danielme.demo.springdatajpa.model.IdValueDTO(c.id, c.name) from Country c where c.id = ?1")
-    IdValueDTO getPairById(Long id);
+    IdValueDTO getAsIdValueDtoById(Long id);
 
     @Query("select c.id as id, c.name as value from Country c where c.id = ?1")
-    PairProjection getPairByIdInterface(Long id);
+    IdValueProjection getAsIdValueInterfaceById(Long id);
 
     @Query("select case when (count(c) > 0)  then true else false end from Country c where c.name = ?1")
     boolean exists(String name);
