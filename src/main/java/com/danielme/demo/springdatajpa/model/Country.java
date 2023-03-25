@@ -17,7 +17,7 @@ import java.util.Calendar;
         name = "Country.byPopulationNamedNativeQuery",
         query = "select id, name FROM countries WHERE population = ?1",
         resultSetMapping = "pairConstructor")
-public class Country extends AuditableEntity {
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

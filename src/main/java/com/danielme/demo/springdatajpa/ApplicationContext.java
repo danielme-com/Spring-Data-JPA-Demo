@@ -1,34 +1,30 @@
 package com.danielme.demo.springdatajpa;
 
-import java.beans.PropertyVetoException;
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
-
+import com.danielme.demo.springdatajpa.repository.base.CustomBaseRepositoryFactoryBean;
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.danielme.demo.springdatajpa.repository.base.CustomBaseRepositoryFactoryBean;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
+import java.beans.PropertyVetoException;
+import java.io.IOException;
+import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan("com.danielme")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages="com.danielme.demo.springdatajpa.repository", repositoryFactoryBeanClass = CustomBaseRepositoryFactoryBean.class)
-@EnableJpaAuditing(auditorAwareRef="customAuditorAware")
+@EnableJpaRepositories(basePackages = "com.danielme.demo.springdatajpa.repository", repositoryFactoryBeanClass = CustomBaseRepositoryFactoryBean.class)
 public class ApplicationContext {
 
     @Bean(destroyMethod = "close")
@@ -55,7 +51,7 @@ public class ApplicationContext {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
-            Environment env) {
+                                                                       Environment env) {
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
         // entityManager.setPersistenceXmlLocation("classpath*:META-INF/persistence.xml");
         // entityManager.setPersistenceUnitName("hibernatePersistenceUnit");

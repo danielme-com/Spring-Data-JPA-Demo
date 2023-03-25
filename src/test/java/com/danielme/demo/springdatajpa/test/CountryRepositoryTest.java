@@ -1,8 +1,6 @@
 package com.danielme.demo.springdatajpa.test;
 
 import com.danielme.demo.springdatajpa.ApplicationContext;
-import com.danielme.demo.springdatajpa.AuthenticationMockup;
-import com.danielme.demo.springdatajpa.model.Confederation;
 import com.danielme.demo.springdatajpa.model.Country;
 import com.danielme.demo.springdatajpa.model.Pair;
 import com.danielme.demo.springdatajpa.model.PairProjection;
@@ -151,26 +149,6 @@ public class CountryRepositoryTest {
         Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3, Sort.by(Sort.Direction.DESC, "name")));
         assertEquals(5, page.getTotalElements());
         assertEquals(2, page.getTotalPages());
-    }
-
-    @Test
-    public void testAudit() {
-        AuthenticationMockup.UserName = "dani";
-
-        Confederation confederation = new Confederation(3L, "CONMEBOL");
-
-        Country country = countryRepository.save(new Country("Bolivia", 10556105, confederation));
-
-        assertEquals(country.getCreateBy(), country.getLastModifiedBy());
-        assertEquals(country.getCreatedDate(), country.getLastModifiedDate());
-
-        AuthenticationMockup.UserName = "update";
-        country.setName("Estado Plurinacional de Bolivia");
-        country = countryRepository.save(country);
-
-        assertEquals(country.getLastModifiedBy(), AuthenticationMockup.UserName);
-        assertEquals(country.getCreateBy(), "dani");
-        assertNotEquals(country.getCreatedDate(), country.getLastModifiedDate());
     }
 
 }
