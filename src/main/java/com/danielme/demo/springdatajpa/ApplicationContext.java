@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.io.IOException;
 import java.util.Properties;
 
 @Configuration
@@ -64,22 +62,10 @@ public class ApplicationContext {
         jpaProperties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
         jpaProperties.put("hibernate.connection.autocommit",
                 env.getRequiredProperty("hibernate.connection.autocommit"));
-        jpaProperties.put("hibernate.cache.use_second_level_cache",
-                env.getRequiredProperty("hibernate.cache"));
-        jpaProperties.put("hibernate.cache.use_query_cache",
-                env.getRequiredProperty("hibernate.query.cache"));
-        jpaProperties.put("hibernate.cache.provider_class", org.ehcache.jsr107.EhcacheCachingProvider.class.getCanonicalName());
-        jpaProperties.put("hibernate.cache.region.factory_class",
-                org.hibernate.cache.jcache.internal.JCacheRegionFactory.class.getCanonicalName());
         jpaProperties.put("hibernate.generate_statistics",
                 env.getRequiredProperty("hibernate.statistics"));
         jpaProperties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
         jpaProperties.put("hibernate.format_sql", env.getRequiredProperty("hibernate.format_sql"));
-        try {
-            jpaProperties.put("hibernate.javax.cache.uri", new ClassPathResource("/cache.xml").getURL().toString());
-        } catch (IOException ex) {
-            throw new IllegalArgumentException("invalid cache.xml location", ex);
-        }
 
         entityManager.setJpaProperties(jpaProperties);
 

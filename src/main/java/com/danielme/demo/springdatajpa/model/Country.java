@@ -3,7 +3,6 @@ package com.danielme.demo.springdatajpa.model;
 import javax.persistence.*;
 import java.util.Calendar;
 
-@org.hibernate.annotations.Cache(usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 @Table(name = "countries")
 @NamedQuery(name = "Country.byPopulationNamedQuery", query = "FROM Country WHERE population = ?1")

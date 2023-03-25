@@ -8,7 +8,7 @@
     <name>spring-data-jpa-demo</name>
     <inceptionYear>2014</inceptionYear>
 
-    <description>Spring/Spring Data JPA + JPA 2 + Hibernate 5 + c3p0 + EHCache + log4j Integration Demo</description>
+    <description>Spring/Spring Data JPA + JPA 2 + Hibernate 5 + c3p0 + log4j Integration Demo</description>
 
     <properties>
 
@@ -22,7 +22,6 @@
         <spring.data.jpa.version>2.7.10</spring.data.jpa.version>
         <spring.version>5.3.26</spring.version>
         <junit.version>4.13.2</junit.version>
-        <ehcache.version>3.9.0</ehcache.version>
 
     </properties>
 
@@ -81,18 +80,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jcache</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-            <version>${ehcache.version}</version>
         </dependency>
 
         <dependency>
