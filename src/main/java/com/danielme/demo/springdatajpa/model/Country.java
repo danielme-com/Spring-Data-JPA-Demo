@@ -7,7 +7,7 @@ import java.util.Calendar;
 @Table(name = "countries")
 @NamedQuery(name = "Country.byPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
 @SqlResultSetMapping(
-        name = "idValueConstructor",
+        name = "idNameConstructor",
         classes = @ConstructorResult(targetClass = IdNameDTO.class,
                 columns = {
                         @ColumnResult(name = "id", type = Long.class),
@@ -15,7 +15,7 @@ import java.util.Calendar;
 @NamedNativeQuery(
         name = "Country.byPopulationNamedNativeQuery",
         query = "select id, name FROM countries WHERE population = ?1",
-        resultSetMapping = "idValueConstructor")
+        resultSetMapping = "idNameConstructor")
 public class Country {
 
     @Id

@@ -89,16 +89,16 @@ public class CountryRepositoryTest {
 
     @Test
     public void testNamedNativeQuery() {
-        String value = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION).getName();
+        String name = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION).getName();
 
-        assertEquals(MEXICO, value);
+        assertEquals(MEXICO, name);
     }
 
     @Test
     public void testProjectionNativeQuery() {
-        String value = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION).getName();
+        String name = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION).getName();
 
-        assertEquals(MEXICO, value);
+        assertEquals(MEXICO, name);
     }
 
     @Test
