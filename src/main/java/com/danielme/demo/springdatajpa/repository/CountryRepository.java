@@ -31,7 +31,7 @@ public interface CountryRepository extends Repository<Country, Long> {
     @Query("select c.name from Country c where c.id = :id")
     Optional<String> findNameById(Long id);
 
-    @Query("from Country c where lower(c.name) like lower(:name)")
+    @Query("select c from Country c where lower(c.name) like lower(:name)")
     Page<Country> findByNameWithQuery(@Param("name")String name, Pageable page);
 
     //@Query("from Country c where lower(c.name) like lower(?1)")
