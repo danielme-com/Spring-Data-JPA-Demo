@@ -31,8 +31,9 @@ public class CountryRepositoryTest {
     private static final String SPAIN = "Spain";
     private static final String NORWAY = "Norway";
     private static final String COLOMBIA = "Colombia";
-    public static final int MEXICO_POPULATION = 115296767;
-    public static final String MEXICO = "Mexico";
+    private static final int MEXICO_POPULATION = 115296767;
+    private static final String MEXICO = "Mexico";
+    private static final int ALL_COUNTRIES = 5;
 
     @Autowired
     private CountryRepository countryRepository;
@@ -54,7 +55,6 @@ public class CountryRepositoryTest {
         assertEquals(1, countriesWithP.size());
         assertEquals(SPAIN_ID, countriesWithP.get(0).getId());
     }
-
 
     @Test
     public void testPopulation() {
@@ -136,18 +136,16 @@ public class CountryRepositoryTest {
 
     @Test
     public void testProjectionConstructor() {
-        IdNameDTO idNameDTO = countryRepository.getAsIdNameDtoById(SPAIN_ID);
+        List<IdNameDTO> countries = countryRepository.findAsIdNameDtoBy();
 
-        assertEquals(SPAIN_ID, idNameDTO.getId());
-        assertEquals(SPAIN, idNameDTO.getName());
+        assertEquals(5, countries.size());
     }
 
     @Test
     public void testProjectionInterface() {
-        IdNameProjection idName = countryRepository.getAsIdNameInterfaceById(SPAIN_ID);
+        List<IdNameProjection> countries = countryRepository.getAsIdNameInterface();
 
-        assertEquals(SPAIN_ID, idName.getId());
-        assertEquals(SPAIN, idName.getName());
+        assertEquals(5, countries.size());
     }
 
     @Test
@@ -161,7 +159,7 @@ public class CountryRepositoryTest {
     public void testFindAllPageNative() {
         Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3));
 
-        assertEquals(5, page.getTotalElements());
+        assertEquals(ALL_COUNTRIES, page.getTotalElements());
         assertEquals(2, page.getTotalPages());
     }
 

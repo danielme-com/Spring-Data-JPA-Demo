@@ -57,15 +57,15 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);
 
-    @Query("select new com.danielme.demo.springdatajpa.model.IdNameDTO(c.id, c.name) from Country c where c.id = ?1")
-    IdNameDTO getAsIdNameDtoById(Long id);
+    @Query("select new com.danielme.demo.springdatajpa.model.IdNameDTO(c.id, c.name) from Country c")
+    List<IdNameDTO> getAsIdNameDto();
 
-    IdNameDTO findAsIdNameDtoById(Long id);
+    List<IdNameDTO> findAsIdNameDtoBy();
 
-    IdNameProjection findAsIdNameProjectionById(Long id);
+    List<IdNameProjection> findAsIdNameProjectionBy();
 
-    @Query("select c.id as id, c.name as name from Country c where c.id = ?1")
-    IdNameProjection getAsIdNameInterfaceById(Long id);
+    @Query("select c.id as id, c.name as name from Country c")
+    List<IdNameProjection> getAsIdNameInterface();
 
     boolean existsByPopulationGreaterThan(int population);
 
