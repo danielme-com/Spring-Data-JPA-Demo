@@ -111,6 +111,24 @@ public class CountryRepositoryTest {
         assertEquals(COLOMBIA, page0.getContent().get(0).getName());
     }
 
+
+    @Test
+    public void testQuerysMultipleSorting() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "creation")
+                .and(Sort.by(Sort.Direction.ASC, "name"));
+
+        List<Country> countries = countryRepository.findByNameWithQuery("%i%", sort);
+
+        assertEquals(COLOMBIA, countries.get(0).getName());
+    }
+
+    @Test
+    public void testFindByPopulationGreaterThanOrderByPopulation() {
+        List<Country> countries = countryRepository.findByPopulationGreaterThanOrderByCreationAscName(0);
+
+        assertEquals(COLOMBIA, countries.get(0).getName());
+    }
+
     @Test
     public void testUpdate() {
         Calendar creation = countryRepository.findByName(NORWAY).get().getCreation();
@@ -162,5 +180,6 @@ public class CountryRepositoryTest {
         assertEquals(ALL_COUNTRIES, page.getTotalElements());
         assertEquals(2, page.getTotalPages());
     }
+
 
 }

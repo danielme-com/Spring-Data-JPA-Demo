@@ -32,6 +32,9 @@ public interface CountryRepository extends Repository<Country, Long> {
     Optional<String> findNameById(Long id);
 
     @Query("select c from Country c where lower(c.name) like lower(:name)")
+    List<Country> findByNameWithQuery(@Param("name") String name, Sort sort);
+
+    @Query("select c from Country c where lower(c.name) like lower(:name)")
     Page<Country> findByNameWithQuery(@Param("name")String name, Pageable page);
 
     //@Query("from Country c where lower(c.name) like lower(?1)")
@@ -55,7 +58,7 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     Optional<Country> findByName(String name, Sort sort);
 
-    List<Country> findByPopulationGreaterThanOrderByPopulationAsc(Integer population);
+    List<Country> findByPopulationGreaterThanOrderByCreationAscName(Integer population);
 
     @Query("select new com.danielme.demo.springdatajpa.model.IdNameDTO(c.id, c.name) from Country c")
     List<IdNameDTO> getAsIdNameDto();
