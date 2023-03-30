@@ -28,6 +28,8 @@ import static org.junit.Assert.*;
 public class CountryRepositoryTest {
 
     private static final Long SPAIN_ID = 2L;
+    private static final Long MEXICO_ID = 3L;
+    private static final Long CONCACAF_ID = 2L;
     private static final String SPAIN = "Spain";
     private static final String NORWAY = "Norway";
     private static final String COLOMBIA = "Colombia";
@@ -54,6 +56,14 @@ public class CountryRepositoryTest {
 
         assertEquals(1, countriesWithP.size());
         assertEquals(SPAIN_ID, countriesWithP.get(0).getId());
+    }
+
+    @Test
+    public void testFindByNameContainingIgnoreCaseAndConfederationId() {
+        List<Country> countries = countryRepository.findByNameContainingIgnoreCaseAndConfederationId("m", CONCACAF_ID);
+
+        assertEquals(1, countries.size());
+        assertEquals(MEXICO_ID, countries.get(0).getId());
     }
 
     @Test

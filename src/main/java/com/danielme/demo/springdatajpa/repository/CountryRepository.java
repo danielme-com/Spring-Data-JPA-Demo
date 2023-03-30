@@ -28,6 +28,8 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByNameContainingIgnoreCase(String name);
 
+    List<Country> findByNameContainingIgnoreCaseAndConfederationId(String name, Long confId);
+
     @Query("select c.name from Country c where c.id = :id")
     Optional<String> findNameById(Long id);
 
