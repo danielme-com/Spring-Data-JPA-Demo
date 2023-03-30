@@ -48,10 +48,10 @@ public interface CountryRepository extends Repository<Country, Long> {
     @Query(value = "select id, name FROM countries WHERE population = :population", nativeQuery = true)
     IdNameProjection byPopulationProjectionNativeQuery(@Param("population") Integer population);
 
-    @Query(value = "select * from countries", nativeQuery = true)
-    List<Country> findAllNative();
+    @Query(value = "select * from countries WHERE confederation_id = :confId", nativeQuery = true)
+    List<Country> findAllByConfederationNative(@Param("confId") Long confId);
 
-    @Query(value = "select * from countries order by name",
+    @Query(value = "select * from countries",
             nativeQuery = true,
             countQuery = "select count(*) from countries")
     Page<Country> findAllNative(Pageable pageable);

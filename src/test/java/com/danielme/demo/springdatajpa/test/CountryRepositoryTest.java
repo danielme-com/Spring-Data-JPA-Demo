@@ -178,18 +178,17 @@ public class CountryRepositoryTest {
 
     @Test
     public void testFindAllListNative() {
-        List<Country> countries = countryRepository.findAllNative();
+        List<Country> countriesConcacaf = countryRepository.findAllByConfederationNative(CONCACAF_ID);
 
-        assertEquals(5, countries.size());
+        assertEquals(2, countriesConcacaf.size());
     }
 
     @Test
     public void testFindAllPageNative() {
-        Page<Country> page = countryRepository.findAllNative(PageRequest.of(0, 3));
+        Page<Country> page0 = countryRepository.findAllNative(PageRequest.of(0, 3, Sort.by("name")));
 
-        assertEquals(ALL_COUNTRIES, page.getTotalElements());
-        assertEquals(2, page.getTotalPages());
+        assertEquals(ALL_COUNTRIES, page0.getTotalElements());
+        assertEquals(2, page0.getTotalPages());
     }
-
 
 }
