@@ -143,7 +143,7 @@ public class CountryRepositoryTest {
     public void testUpdate() {
         Calendar creation = countryRepository.findByName(NORWAY).get().getCreation();
 
-        assertEquals(5, countryRepository.updateCreation(Calendar.getInstance()));
+        assertEquals(ALL_COUNTRIES, countryRepository.updateCreation(Calendar.getInstance()));
         assertTrue(countryRepository.findByName(NORWAY).get().getCreation().after(creation));
     }
 
@@ -166,14 +166,14 @@ public class CountryRepositoryTest {
     public void testProjectionConstructor() {
         List<IdNameDTO> countries = countryRepository.findAsIdNameDtoBy();
 
-        assertEquals(5, countries.size());
+        assertEquals(ALL_COUNTRIES, countries.size());
     }
 
     @Test
     public void testProjectionInterface() {
         List<IdNameProjection> countries = countryRepository.getAsIdNameInterface();
 
-        assertEquals(5, countries.size());
+        assertEquals(ALL_COUNTRIES, countries.size());
     }
 
     @Test
