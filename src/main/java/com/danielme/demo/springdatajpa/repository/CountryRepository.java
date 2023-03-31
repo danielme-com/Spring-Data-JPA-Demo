@@ -12,6 +12,7 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +78,7 @@ public interface CountryRepository extends Repository<Country, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Country set creation = (?1)")
-    int updateCreation(Calendar creation);
+    int updateCreation(LocalDateTime creation);
 
     @Transactional
     int deleteByName(String name);

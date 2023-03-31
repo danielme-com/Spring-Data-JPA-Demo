@@ -1,7 +1,7 @@
 package com.danielme.demo.springdatajpa.model;
 
 import javax.persistence.*;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "countries")
@@ -29,8 +29,7 @@ public class Country {
     private Integer population;
 
     @Column(updatable = false, nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar creation;
+    private LocalDateTime creation;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "confederation_id")
@@ -49,7 +48,7 @@ public class Country {
 
     @PrePersist
     public void onPersist() {
-        creation = Calendar.getInstance();
+        creation = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -76,11 +75,11 @@ public class Country {
         this.population = population;
     }
 
-    public Calendar getCreation() {
+    public LocalDateTime getCreation() {
         return creation;
     }
 
-    public void setCreation(Calendar creation) {
+    public void setCreation(LocalDateTime creation) {
         this.creation = creation;
     }
 

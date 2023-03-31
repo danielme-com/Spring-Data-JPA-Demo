@@ -15,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -141,10 +141,10 @@ public class CountryRepositoryTest {
 
     @Test
     public void testUpdate() {
-        Calendar creation = countryRepository.findByName(NORWAY).get().getCreation();
+        LocalDateTime creation = countryRepository.findByName(NORWAY).get().getCreation();
 
-        assertEquals(ALL_COUNTRIES, countryRepository.updateCreation(Calendar.getInstance()));
-        assertTrue(countryRepository.findByName(NORWAY).get().getCreation().after(creation));
+        assertEquals(ALL_COUNTRIES, countryRepository.updateCreation(LocalDateTime.now()));
+        assertTrue(countryRepository.findByName(NORWAY).get().getCreation().isAfter(creation));
     }
 
     @Test
