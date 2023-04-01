@@ -29,12 +29,12 @@ public class CountryRepositoryTest {
 
     private static final Long SPAIN_ID = 2L;
     private static final Long MEXICO_ID = 3L;
+    private static final Long COLOMBIA_ID = 4L;
     private static final Long CONCACAF_ID = 2L;
     private static final String SPAIN = "Spain";
     private static final String NORWAY = "Norway";
-    private static final String COLOMBIA = "Colombia";
-    private static final int MEXICO_POPULATION = 115296767;
     private static final String MEXICO = "Mexico";
+    private static final int MEXICO_POPULATION = 115296767;
     private static final int ALL_COUNTRIES = 5;
 
     @Autowired
@@ -84,7 +84,7 @@ public class CountryRepositoryTest {
         List<Country> countries = countryRepository.findByConfederationName("CONMEBOL");
 
         assertEquals(1, countries.size());
-        assertEquals(COLOMBIA, countries.get(0).getName());
+        assertEquals(COLOMBIA_ID, countries.get(0).getId());
     }
 
     @Test
@@ -99,16 +99,18 @@ public class CountryRepositoryTest {
 
     @Test
     public void testNamedNativeQuery() {
-        String name = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION).getName();
+        IdNameDTO mexico = countryRepository.byPopulationNamedNativeQuery(MEXICO_POPULATION);
 
-        assertEquals(MEXICO, name);
+        assertEquals(MEXICO_ID, mexico.getId());
+        assertEquals(MEXICO, mexico.getName());
     }
 
     @Test
     public void testProjectionNativeQuery() {
-        String name = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION).getName();
+        IdNameProjection mexico = countryRepository.byPopulationProjectionNativeQuery(MEXICO_POPULATION);
 
-        assertEquals(MEXICO, name);
+        assertEquals(MEXICO_ID, mexico.getId());
+        assertEquals(MEXICO, mexico.getName());
     }
 
     @Test
@@ -118,7 +120,7 @@ public class CountryRepositoryTest {
 
         assertEquals(4, page0.getTotalElements());
         assertEquals(2, page0.getTotalPages());
-        assertEquals(COLOMBIA, page0.getContent().get(0).getName());
+        assertEquals(COLOMBIA_ID, page0.getContent().get(0).getId());
     }
 
 
@@ -136,7 +138,7 @@ public class CountryRepositoryTest {
     public void testFindByPopulationGreaterThanOrderByPopulation() {
         List<Country> countries = countryRepository.findByPopulationGreaterThanOrderByCreationAscName(0);
 
-        assertEquals(COLOMBIA, countries.get(0).getName());
+        assertEquals(COLOMBIA_ID, countries.get(0).getId());
     }
 
     @Test
@@ -213,7 +215,7 @@ public class CountryRepositoryTest {
         List<Country> countries = countryRepository.findByConfederationIdNotIn(1L, 2L);
 
         assertEquals(1, countries.size());
-        assertEquals(COLOMBIA, countries.get(0).getName());
+        assertEquals(COLOMBIA_ID, countries.get(0).getId());
     }
 
 }
