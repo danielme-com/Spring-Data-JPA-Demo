@@ -31,6 +31,12 @@ public interface CountryRepository extends Repository<Country, Long> {
 
     List<Country> findByNameContainingIgnoreCaseAndConfederationId(String name, Long confId);
 
+    List<Country> findByCreationBetween(LocalDateTime start, LocalDateTime end);
+
+    List<Country> findByNameStartingWithIgnoreCase(String name);
+
+    List<Country> findByConfederationIdNotIn(Long... ids);
+
     @Query("select c.name from Country c where c.id = :id")
     Optional<String> findNameById(Long id);
 

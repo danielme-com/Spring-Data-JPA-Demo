@@ -129,7 +129,7 @@ public class CountryRepositoryTest {
 
         List<Country> countries = countryRepository.findByNameWithQuery("%i%", sort);
 
-        assertEquals(COLOMBIA, countries.get(0).getName());
+        assertEquals(SPAIN_ID, countries.get(0).getId());
     }
 
     @Test
@@ -189,6 +189,31 @@ public class CountryRepositoryTest {
 
         assertEquals(ALL_COUNTRIES, page0.getTotalElements());
         assertEquals(2, page0.getTotalPages());
+    }
+
+    @Test
+    public void testFindByCreationBetween() {
+        LocalDateTime startDate = LocalDateTime.of(2018, 10, 6, 18, 15);
+        List<Country> countriesBetweenDates = countryRepository.findByCreationBetween(startDate, LocalDateTime.now());
+
+        assertEquals(1, countriesBetweenDates.size());
+        assertEquals(SPAIN_ID, countriesBetweenDates.get(0).getId());
+    }
+
+    @Test
+    public void testFindByNameStartsWith() {
+        List<Country> countriesStartingS = countryRepository.findByNameStartingWithIgnoreCase("s");
+
+        assertEquals(1, countriesStartingS.size());
+        assertEquals(SPAIN_ID, countriesStartingS.get(0).getId());
+    }
+
+    @Test
+    public void testFindByNameNotStartsWith() {
+        List<Country> countries = countryRepository.findByConfederationIdNotIn(1L, 2L);
+
+        assertEquals(1, countries.size());
+        assertEquals(COLOMBIA, countries.get(0).getName());
     }
 
 }
