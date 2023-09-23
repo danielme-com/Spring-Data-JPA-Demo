@@ -62,11 +62,6 @@ public class Country {
         this.confederation = confederation;
     }
 
-    @PrePersist
-    public void onPersist() {
-        creation = LocalDateTime.now();
-    }
-
     public Long getId() {
         return id;
     }
