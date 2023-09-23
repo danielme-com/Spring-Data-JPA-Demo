@@ -59,8 +59,7 @@ public interface CountryRepository extends Repository<Country, Long> {
     List<Country> findAllByConfederationNative(@Param("confId") Long confId);
 
     @Query(value = "select * from countries",
-            nativeQuery = true,
-            countQuery = "select count(*) from countries")
+            nativeQuery = true)
     Page<Country> findAllNative(Pageable pageable);
 
     Optional<Country> byPopulationNamedQuery(Integer population);

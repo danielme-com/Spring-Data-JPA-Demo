@@ -1,6 +1,6 @@
 package com.danielme.demo.springdatajpa.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "confederations")

@@ -1,10 +1,10 @@
 package com.danielme.demo.springdatajpa.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "countries")
+
 @NamedQuery(name = "Country.byPopulationNamedQuery", query = "FROM Country WHERE population = ?1")
 @SqlResultSetMapping(
         name = "idNameConstructor",
@@ -16,6 +16,22 @@ import java.time.LocalDateTime;
         name = "Country.byPopulationNamedNativeQuery",
         query = "select id, name FROM countries WHERE population = ?1",
         resultSetMapping = "idNameConstructor")
+@NamedStoredProcedureQuery(name = "Country.findCountriesByConfederationIdAsNamed",
+        procedureName = "countries_by_confederation_id",
+        resultClasses = Country.class,
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN,
+                        type = Long.class)
+        })
+@NamedStoredProcedureQuery(name = "Country.findCountriesIdNameByConfederationAsDTO",
+        procedureName = "countries_by_confederation_id",
+        resultSetMappings = "idNameConstructor",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN,
+                        name = "param_conf_id", type = Long.class)
+        })
+@Entity
+@Table(name = "countries")
 public class Country {
 
     @Id

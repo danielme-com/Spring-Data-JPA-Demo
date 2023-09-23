@@ -13,14 +13,14 @@
     <properties>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
 
-        <hibernate.version>5.6.14.Final</hibernate.version>
+        <hibernate.version>6.2.5.Final</hibernate.version>
         <c3p0.version>0.9.5.5</c3p0.version>
         <slf4jlog4j.version>1.7.36</slf4jlog4j.version>
         <mysql.version>8.0.32</mysql.version>
-        <spring.data.jpa.version>2.7.10</spring.data.jpa.version>
-        <spring.version>5.3.26</spring.version>
+        <spring.data.jpa.version>3.1.1</spring.data.jpa.version>
+        <spring.version>6.0.10</spring.version>
         <junit.version>4.13.2</junit.version>
 
     </properties>
@@ -99,6 +99,7 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>${mysql.version}</version>
         </dependency>
+
 
         <!-- testing -->
         <dependency>
